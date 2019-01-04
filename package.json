@@ -9,7 +9,7 @@
     "develop": "other-index development.html",
     "lint": "standard --fix 'components/**/*.js' 'models/**/*.js'",
     "postinstall": "npm run bundle",
-    "start": "other-index production.html 3000"
+    "start": "other-index index.html 3000"
   },
   "author": "Mark Stahl <mjstahl@gmail.com>",
   "license": "MIT",
