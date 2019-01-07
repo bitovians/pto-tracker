@@ -47,6 +47,11 @@ Component.extend({
       return this.totalUsedHoursByYear(this.timeEntries.allTimeOff)
     },
 
+    clearAPIToken (ev) {
+      ev.preventDefault()
+      this.apiInfo.token = undefined
+    },
+
     hoursPerMonth (anniversary) {
       const HOURS_PER_MONTH = [13.333, 13.333, 13.333, 15.333, 15.333, 17.333]
       const last = HOURS_PER_MONTH.length - 1

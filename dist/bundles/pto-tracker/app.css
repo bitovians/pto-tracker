@@ -54,12 +54,27 @@
 .form-wrapper button[disabled]:hover {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.75);
 }
+.logout {
+  text-align: right;
+  margin-right: 60px;
+  margin-top: 20px;
+}
+.logout a {
+  color: #356FD1;
+  text-decoration: none;
+}
+.logout a:visited {
+  color: #356FD1;
+}
+.logout a:hover {
+  border-bottom: 1px solid #356FD1;
+}
 .display-wrapper {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 60px auto 0;
+  margin: 40px auto 0;
 }
 .hours-container,
 .days-container {

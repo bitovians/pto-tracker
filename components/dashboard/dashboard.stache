@@ -1,4 +1,7 @@
-<div class="second-step display-wrapper">
+<div class="logout">
+  <a href="" on:click="clearAPIToken(scope.event)">Clear API Token</a>
+</div>
+<div class="display-wrapper">
   <div class="number-wrapper">
     <div class="hours-container">
       {{#if(remainingHours)}}

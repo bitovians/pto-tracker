@@ -24,23 +24,11 @@ Component.extend({
       }
     },
 
-    url: {
-      default: 'https://bitovi.freshbooks.com/api/2.1/xml-in',
-      get (lastSetValue) {
-        if (lastSetValue) return lastSetValue
-        return this.apiInfo.url
-      }
-    },
-
     authenticate (ev) {
       ev.preventDefault()
-
-      const TOKEN_VALIDATE = /\b[0-9a-f]{5,40}\b/
-      if (TOKEN_VALIDATE.test(this.token)) {
+      if (this.apiInfo.isValidToken(this.token)) {
         this.validToken = true
-
         this.apiInfo.token = this.token
-        this.apiInfo.url = this.url
       } else {
         this.validToken = false
         document.querySelector('input#token').select()

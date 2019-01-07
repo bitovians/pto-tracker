@@ -1051,8 +1051,8 @@ define('package.json!npm', [
                 'can-view-import': '4.2.1',
                 'can-stache-bindings': '4.8.0',
                 'lodash': '4.17.11',
-                'moment': '2.23.0',
-                'xml-js': '1.6.8'
+                'xml-js': '1.6.8',
+                'moment': '2.23.0'
             }
         },
         {
@@ -1075,6 +1075,34 @@ define('package.json!npm', [
                 'meta': {}
             },
             'resolutions': {}
+        },
+        {
+            'name': 'can',
+            'version': '5.21.4',
+            'fileUrl': './node_modules/can/package.json',
+            'main': 'can.js',
+            'steal': {
+                'npmAlgorithm': 'flat',
+                'main': 'can',
+                'npmIgnore': {
+                    'bit-docs': true,
+                    'testee': true,
+                    'async': true,
+                    'saucelabs': true,
+                    'test-saucelabs': true,
+                    'wd': true,
+                    'http-server': true
+                },
+                'meta': { 'socket.io-client/dist/socket.io': { 'format': 'cjs' } },
+                'configDependencies': ['./node_modules/steal-conditional/conditional.js'],
+                'plugins': ['steal-stache']
+            },
+            'resolutions': {
+                'can': '5.21.4',
+                'can-define': '2.7.5',
+                'can-component': '4.4.11',
+                'can-debug': '2.0.5'
+            }
         },
         {
             'name': 'steal',
@@ -1144,34 +1172,6 @@ define('package.json!npm', [
             'resolutions': {}
         },
         {
-            'name': 'can',
-            'version': '5.21.4',
-            'fileUrl': './node_modules/can/package.json',
-            'main': 'can.js',
-            'steal': {
-                'npmAlgorithm': 'flat',
-                'main': 'can',
-                'npmIgnore': {
-                    'bit-docs': true,
-                    'testee': true,
-                    'async': true,
-                    'saucelabs': true,
-                    'test-saucelabs': true,
-                    'wd': true,
-                    'http-server': true
-                },
-                'meta': { 'socket.io-client/dist/socket.io': { 'format': 'cjs' } },
-                'configDependencies': ['./node_modules/steal-conditional/conditional.js'],
-                'plugins': ['steal-stache']
-            },
-            'resolutions': {
-                'can': '5.21.4',
-                'can-component': '4.4.11',
-                'can-define': '2.7.5',
-                'can-debug': '2.0.5'
-            }
-        },
-        {
             'name': 'steal-css',
             'version': '1.3.2',
             'fileUrl': './node_modules/steal-css/package.json',
@@ -1189,6 +1189,27 @@ define('package.json!npm', [
             'main': 'index.js',
             'jspm': {},
             'resolutions': {}
+        },
+        {
+            'name': 'steal-stache',
+            'version': '4.1.2',
+            'fileUrl': './node_modules/steal-stache/package.json',
+            'main': 'steal-stache.js',
+            'steal': {
+                'main': 'steal-stache',
+                'configDependencies': ['live-reload'],
+                'npmIgnore': {
+                    'documentjs': true,
+                    'testee': true,
+                    'steal-tools': true
+                },
+                'npmAlgorithm': 'flat',
+                'ext': { 'stache': 'steal-stache' }
+            },
+            'resolutions': {
+                'can-stache-bindings': '4.8.0',
+                'can-view-import': '4.2.1'
+            }
         },
         {
             'name': 'assert',
@@ -1234,14 +1255,6 @@ define('package.json!npm', [
             'resolutions': {}
         },
         {
-            'name': 'http-browserify',
-            'version': '1.7.0',
-            'fileUrl': './node_modules/http-browserify/package.json',
-            'main': 'index.js',
-            'browser': 'index.js',
-            'resolutions': {}
-        },
-        {
             'name': 'https-browserify',
             'version': '1.0.0',
             'fileUrl': './node_modules/https-browserify/package.json',
@@ -1256,11 +1269,11 @@ define('package.json!npm', [
             'resolutions': {}
         },
         {
-            'name': 'process',
-            'version': '0.11.10',
-            'fileUrl': './node_modules/process/package.json',
-            'main': './index.js',
-            'browser': './browser.js',
+            'name': 'http-browserify',
+            'version': '1.7.0',
+            'fileUrl': './node_modules/http-browserify/package.json',
+            'main': 'index.js',
+            'browser': 'index.js',
             'resolutions': {}
         },
         {
@@ -1273,18 +1286,19 @@ define('package.json!npm', [
             'resolutions': {}
         },
         {
-            'name': 'string_decoder',
-            'version': '1.0.3',
-            'fileUrl': './node_modules/string_decoder/package.json',
-            'main': 'lib/string_decoder.js',
-            'resolutions': {}
-        },
-        {
             'name': 'punycode',
             'version': '2.0.1',
             'fileUrl': './node_modules/punycode/package.json',
             'main': 'punycode.js',
             'jspm': {},
+            'resolutions': {}
+        },
+        {
+            'name': 'process',
+            'version': '0.11.10',
+            'fileUrl': './node_modules/process/package.json',
+            'main': './index.js',
+            'browser': './browser.js',
             'resolutions': {}
         },
         {
@@ -1302,38 +1316,17 @@ define('package.json!npm', [
             'resolutions': {}
         },
         {
+            'name': 'string_decoder',
+            'version': '1.0.3',
+            'fileUrl': './node_modules/string_decoder/package.json',
+            'main': 'lib/string_decoder.js',
+            'resolutions': {}
+        },
+        {
             'name': 'zlib-browserify',
             'version': '0.0.3',
             'fileUrl': './node_modules/zlib-browserify/package.json',
             'main': 'index.js',
-            'resolutions': {}
-        },
-        {
-            'name': 'steal-stache',
-            'version': '4.1.2',
-            'fileUrl': './node_modules/steal-stache/package.json',
-            'main': 'steal-stache.js',
-            'steal': {
-                'main': 'steal-stache',
-                'configDependencies': ['live-reload'],
-                'npmIgnore': {
-                    'documentjs': true,
-                    'testee': true,
-                    'steal-tools': true
-                },
-                'npmAlgorithm': 'flat',
-                'ext': { 'stache': 'steal-stache' }
-            },
-            'resolutions': {
-                'can-stache-bindings': '4.8.0',
-                'can-view-import': '4.2.1'
-            }
-        },
-        {
-            'name': 'steal-config-utils',
-            'version': '1.0.0',
-            'fileUrl': './node_modules/steal-config-utils/package.json',
-            'main': 'main.js',
             'resolutions': {}
         },
         {
@@ -1347,65 +1340,11 @@ define('package.json!npm', [
             }
         },
         {
-            'name': 'can-component',
-            'version': '4.4.11',
-            'fileUrl': './node_modules/can-component/package.json',
-            'main': 'can-component',
-            'steal': {},
-            'resolutions': {
-                'can-component': '4.4.11',
-                'can-define': '2.7.5',
-                'can-construct': '3.5.3',
-                'can-namespace': '1.0.0',
-                'can-reflect': '1.17.9',
-                'can-observation-recorder': '1.3.0',
-                'can-symbol': '1.6.4',
-                'can-bind': '1.3.0',
-                'can-stache': '4.17.5',
-                'can-view-callbacks': '4.3.6',
-                'can-stache-bindings': '4.8.0',
-                'can-stache-key': '1.4.0',
-                'can-simple-observable': '2.4.1',
-                'can-view-nodelist': '4.3.3',
-                'can-view-scope': '4.13.0',
-                'can-simple-map': '4.3.0',
-                'can-assign': '1.3.1',
-                'can-view-model': '4.0.1',
-                'can-dom-data-state': '1.0.5',
-                'can-child-nodes': '1.2.0',
-                'can-string': '1.0.0',
-                'can-dom-events': '1.3.3',
-                'can-dom-mutate': '1.3.6',
-                'can-globals': '1.2.1',
-                'can-log': '1.0.0',
-                'can-queues': '1.2.1',
-                'can-control': '4.4.1'
-            }
-        },
-        {
-            'name': 'can-define',
-            'version': '2.7.5',
-            'fileUrl': './node_modules/can-define/package.json',
-            'main': 'can-define.js',
-            'resolutions': {
-                'can-define': '2.7.5',
-                'can-construct': '3.5.3',
-                'can-namespace': '1.0.0',
-                'can-log': '1.0.0',
-                'can-reflect': '1.17.9',
-                'can-observation-recorder': '1.3.0',
-                'can-queues': '1.2.1',
-                'can-symbol': '1.6.4',
-                'can-event-queue': '1.1.4',
-                'can-assign': '1.3.1',
-                'can-diff': '1.4.4',
-                'can-simple-observable': '2.4.1',
-                'can-observation': '4.1.2',
-                'can-single-reference': '1.2.0',
-                'can-string-to-any': '1.2.0',
-                'can-data-types': '1.2.0',
-                'can-define-lazy-value': '1.1.0'
-            }
+            'name': 'steal-config-utils',
+            'version': '1.0.0',
+            'fileUrl': './node_modules/steal-config-utils/package.json',
+            'main': 'main.js',
+            'resolutions': {}
         },
         {
             'name': 'can-view-parser',
@@ -1416,6 +1355,67 @@ define('package.json!npm', [
                 'can-namespace': '1.0.0',
                 'can-log': '1.0.0',
                 'can-attribute-encoder': '1.1.2'
+            }
+        },
+        {
+            'name': 'can-define',
+            'version': '2.7.5',
+            'fileUrl': './node_modules/can-define/package.json',
+            'main': 'can-define.js',
+            'resolutions': {
+                'can-define': '2.7.5',
+                'can-construct': '3.5.3',
+                'can-observation-recorder': '1.3.0',
+                'can-namespace': '1.0.0',
+                'can-queues': '1.2.1',
+                'can-log': '1.0.0',
+                'can-reflect': '1.17.9',
+                'can-symbol': '1.6.4',
+                'can-event-queue': '1.1.4',
+                'can-assign': '1.3.1',
+                'can-diff': '1.4.4',
+                'can-simple-observable': '2.4.1',
+                'can-observation': '4.1.2',
+                'can-single-reference': '1.2.0',
+                'can-string-to-any': '1.2.0',
+                'can-define-lazy-value': '1.1.0',
+                'can-data-types': '1.2.0'
+            }
+        },
+        {
+            'name': 'can-component',
+            'version': '4.4.11',
+            'fileUrl': './node_modules/can-component/package.json',
+            'main': 'can-component',
+            'steal': {},
+            'resolutions': {
+                'can-component': '4.4.11',
+                'can-define': '2.7.5',
+                'can-construct': '3.5.3',
+                'can-observation-recorder': '1.3.0',
+                'can-namespace': '1.0.0',
+                'can-reflect': '1.17.9',
+                'can-symbol': '1.6.4',
+                'can-bind': '1.3.0',
+                'can-view-scope': '4.13.0',
+                'can-view-callbacks': '4.3.6',
+                'can-stache': '4.17.5',
+                'can-stache-bindings': '4.8.0',
+                'can-stache-key': '1.4.0',
+                'can-simple-map': '4.3.0',
+                'can-assign': '1.3.1',
+                'can-simple-observable': '2.4.1',
+                'can-view-model': '4.0.1',
+                'can-dom-data-state': '1.0.5',
+                'can-view-nodelist': '4.3.3',
+                'can-string': '1.0.0',
+                'can-dom-events': '1.3.3',
+                'can-child-nodes': '1.2.0',
+                'can-dom-mutate': '1.3.6',
+                'can-globals': '1.2.1',
+                'can-log': '1.0.0',
+                'can-queues': '1.2.1',
+                'can-control': '4.4.1'
             }
         },
         {
@@ -1456,12 +1456,51 @@ define('package.json!npm', [
             }
         },
         {
+            'name': 'can-observation-recorder',
+            'version': '1.3.0',
+            'fileUrl': './node_modules/can-observation-recorder/package.json',
+            'main': './can-observation-recorder.js',
+            'steal': {
+                'npmIgnore': {
+                    'testee': true,
+                    'generator-donejs': true,
+                    'donejs-cli': true,
+                    'steal-tools': true
+                }
+            },
+            'resolutions': {
+                'can-namespace': '1.0.0',
+                'can-symbol': '1.6.4'
+            }
+        },
+        {
             'name': 'can-namespace',
             'version': '1.0.0',
             'fileUrl': './node_modules/can-namespace/package.json',
             'main': 'can-namespace',
             'steal': { 'npmAlgorithm': 'flat' },
             'resolutions': {}
+        },
+        {
+            'name': 'can-queues',
+            'version': '1.2.1',
+            'fileUrl': './node_modules/can-queues/package.json',
+            'main': './can-queues.js',
+            'steal': {
+                'npmIgnore': {
+                    'testee': true,
+                    'generator-donejs': true,
+                    'donejs-cli': true,
+                    'steal-tools': true
+                },
+                'main': 'can-queues'
+            },
+            'resolutions': {
+                'can-log': '1.0.0',
+                'can-queues': '1.2.1',
+                'can-namespace': '1.0.0',
+                'can-assign': '1.3.1'
+            }
         },
         {
             'name': 'can-log',
@@ -1488,45 +1527,6 @@ define('package.json!npm', [
                 'can-reflect': '1.17.9',
                 'can-namespace': '1.0.0',
                 'can-symbol': '1.6.4'
-            }
-        },
-        {
-            'name': 'can-observation-recorder',
-            'version': '1.3.0',
-            'fileUrl': './node_modules/can-observation-recorder/package.json',
-            'main': './can-observation-recorder.js',
-            'steal': {
-                'npmIgnore': {
-                    'testee': true,
-                    'generator-donejs': true,
-                    'donejs-cli': true,
-                    'steal-tools': true
-                }
-            },
-            'resolutions': {
-                'can-namespace': '1.0.0',
-                'can-symbol': '1.6.4'
-            }
-        },
-        {
-            'name': 'can-queues',
-            'version': '1.2.1',
-            'fileUrl': './node_modules/can-queues/package.json',
-            'main': './can-queues.js',
-            'steal': {
-                'npmIgnore': {
-                    'testee': true,
-                    'generator-donejs': true,
-                    'donejs-cli': true,
-                    'steal-tools': true
-                },
-                'main': 'can-queues'
-            },
-            'resolutions': {
-                'can-log': '1.0.0',
-                'can-queues': '1.2.1',
-                'can-namespace': '1.0.0',
-                'can-assign': '1.3.1'
             }
         },
         {
@@ -1596,38 +1596,27 @@ define('package.json!npm', [
             }
         },
         {
-            'name': 'can-stache',
-            'version': '4.17.5',
-            'fileUrl': './node_modules/can-stache/package.json',
-            'main': 'can-stache',
+            'name': 'can-view-scope',
+            'version': '4.13.0',
+            'fileUrl': './node_modules/can-view-scope/package.json',
+            'main': 'can-view-scope',
             'resolutions': {
-                'can-view-callbacks': '4.3.6',
-                'can-stache': '4.17.5',
-                'can-log': '1.0.0',
-                'can-namespace': '1.0.0',
-                'can-globals': '1.2.1',
-                'can-assign': '1.3.1',
-                'can-reflect': '1.17.9',
-                'can-view-scope': '4.13.0',
-                'can-observation-recorder': '1.3.0',
-                'can-symbol': '1.6.4',
-                'can-view-nodelist': '4.3.3',
-                'can-view-parser': '4.1.2',
-                'can-attribute-encoder': '1.1.2',
-                'can-stache-ast': '1.1.0',
-                'can-import-module': '1.2.0',
-                'can-view-target': '4.1.2',
-                'can-dom-mutate': '1.3.6',
-                'can-observation': '4.1.2',
                 'can-stache-key': '1.4.0',
+                'can-observation-recorder': '1.3.0',
+                'can-view-scope': '4.13.0',
+                'can-assign': '1.3.1',
+                'can-namespace': '1.0.0',
+                'can-reflect': '1.17.9',
+                'can-log': '1.0.0',
+                'can-simple-map': '4.3.0',
                 'can-stache-helpers': '1.2.0',
-                'can-dom-data-state': '1.0.5',
-                'can-fragment': '1.3.0',
                 'can-define-lazy-value': '1.1.0',
-                'can-view-live': '4.2.7',
-                'can-simple-observable': '2.4.1',
-                'can-join-uris': '1.2.0',
-                'can-dom-data': '1.0.1'
+                'can-single-reference': '1.2.0',
+                'can-observation': '4.1.2',
+                'can-symbol': '1.6.4',
+                'can-reflect-dependencies': '1.1.1',
+                'can-event-queue': '1.1.4',
+                'can-simple-observable': '2.4.1'
             }
         },
         {
@@ -1645,6 +1634,41 @@ define('package.json!npm', [
                 'can-symbol': '1.6.4',
                 'can-reflect': '1.17.9',
                 'can-fragment': '1.3.0'
+            }
+        },
+        {
+            'name': 'can-stache',
+            'version': '4.17.5',
+            'fileUrl': './node_modules/can-stache/package.json',
+            'main': 'can-stache',
+            'resolutions': {
+                'can-view-callbacks': '4.3.6',
+                'can-stache': '4.17.5',
+                'can-log': '1.0.0',
+                'can-namespace': '1.0.0',
+                'can-globals': '1.2.1',
+                'can-assign': '1.3.1',
+                'can-reflect': '1.17.9',
+                'can-view-scope': '4.13.0',
+                'can-observation-recorder': '1.3.0',
+                'can-symbol': '1.6.4',
+                'can-view-nodelist': '4.3.3',
+                'can-view-parser': '4.1.2',
+                'can-stache-ast': '1.1.0',
+                'can-attribute-encoder': '1.1.2',
+                'can-import-module': '1.2.0',
+                'can-view-target': '4.1.2',
+                'can-dom-mutate': '1.3.6',
+                'can-observation': '4.1.2',
+                'can-stache-key': '1.4.0',
+                'can-stache-helpers': '1.2.0',
+                'can-dom-data-state': '1.0.5',
+                'can-fragment': '1.3.0',
+                'can-define-lazy-value': '1.1.0',
+                'can-view-live': '4.2.7',
+                'can-simple-observable': '2.4.1',
+                'can-join-uris': '1.2.0',
+                'can-dom-data': '1.0.1'
             }
         },
         {
@@ -1699,63 +1723,6 @@ define('package.json!npm', [
             }
         },
         {
-            'name': 'can-simple-observable',
-            'version': '2.4.1',
-            'fileUrl': './node_modules/can-simple-observable/package.json',
-            'main': 'can-simple-observable',
-            'steal': {
-                'npmIgnore': {
-                    'testee': true,
-                    'steal-tools': true
-                }
-            },
-            'resolutions': {
-                'can-reflect': '1.17.9',
-                'can-simple-observable': '2.4.1',
-                'can-event-queue': '1.1.4',
-                'can-namespace': '1.0.0',
-                'can-symbol': '1.6.4',
-                'can-observation-recorder': '1.3.0',
-                'can-observation': '4.1.2',
-                'can-log': '1.0.0',
-                'can-queues': '1.2.1'
-            }
-        },
-        {
-            'name': 'can-view-nodelist',
-            'version': '4.3.3',
-            'fileUrl': './node_modules/can-view-nodelist/package.json',
-            'main': 'can-view-nodelist',
-            'resolutions': {
-                'can-namespace': '1.0.0',
-                'can-dom-mutate': '1.3.6'
-            }
-        },
-        {
-            'name': 'can-view-scope',
-            'version': '4.13.0',
-            'fileUrl': './node_modules/can-view-scope/package.json',
-            'main': 'can-view-scope',
-            'resolutions': {
-                'can-stache-key': '1.4.0',
-                'can-observation-recorder': '1.3.0',
-                'can-view-scope': '4.13.0',
-                'can-assign': '1.3.1',
-                'can-namespace': '1.0.0',
-                'can-reflect': '1.17.9',
-                'can-log': '1.0.0',
-                'can-simple-map': '4.3.0',
-                'can-define-lazy-value': '1.1.0',
-                'can-stache-helpers': '1.2.0',
-                'can-single-reference': '1.2.0',
-                'can-observation': '4.1.2',
-                'can-symbol': '1.6.4',
-                'can-reflect-dependencies': '1.1.1',
-                'can-event-queue': '1.1.4',
-                'can-simple-observable': '2.4.1'
-            }
-        },
-        {
             'name': 'can-simple-map',
             'version': '4.3.0',
             'fileUrl': './node_modules/can-simple-map/package.json',
@@ -1797,6 +1764,29 @@ define('package.json!npm', [
             'resolutions': { 'can-namespace': '1.0.0' }
         },
         {
+            'name': 'can-simple-observable',
+            'version': '2.4.1',
+            'fileUrl': './node_modules/can-simple-observable/package.json',
+            'main': 'can-simple-observable',
+            'steal': {
+                'npmIgnore': {
+                    'testee': true,
+                    'steal-tools': true
+                }
+            },
+            'resolutions': {
+                'can-simple-observable': '2.4.1',
+                'can-namespace': '1.0.0',
+                'can-symbol': '1.6.4',
+                'can-reflect': '1.17.9',
+                'can-observation-recorder': '1.3.0',
+                'can-event-queue': '1.1.4',
+                'can-log': '1.0.0',
+                'can-observation': '4.1.2',
+                'can-queues': '1.2.1'
+            }
+        },
+        {
             'name': 'can-view-model',
             'version': '4.0.1',
             'fileUrl': './node_modules/can-view-model/package.json',
@@ -1830,19 +1820,14 @@ define('package.json!npm', [
             }
         },
         {
-            'name': 'can-child-nodes',
-            'version': '1.2.0',
-            'fileUrl': './node_modules/can-child-nodes/package.json',
-            'main': 'can-child-nodes',
-            'steal': {
-                'npmIgnore': {
-                    'testee': true,
-                    'generator-donejs': true,
-                    'donejs-cli': true,
-                    'steal-tools': true
-                }
-            },
-            'resolutions': { 'can-namespace': '1.0.0' }
+            'name': 'can-view-nodelist',
+            'version': '4.3.3',
+            'fileUrl': './node_modules/can-view-nodelist/package.json',
+            'main': 'can-view-nodelist',
+            'resolutions': {
+                'can-namespace': '1.0.0',
+                'can-dom-mutate': '1.3.6'
+            }
         },
         {
             'name': 'can-string',
@@ -1877,6 +1862,21 @@ define('package.json!npm', [
             }
         },
         {
+            'name': 'can-child-nodes',
+            'version': '1.2.0',
+            'fileUrl': './node_modules/can-child-nodes/package.json',
+            'main': 'can-child-nodes',
+            'steal': {
+                'npmIgnore': {
+                    'testee': true,
+                    'generator-donejs': true,
+                    'donejs-cli': true,
+                    'steal-tools': true
+                }
+            },
+            'resolutions': { 'can-namespace': '1.0.0' }
+        },
+        {
             'name': 'can-dom-mutate',
             'version': '1.3.6',
             'fileUrl': './node_modules/can-dom-mutate/package.json',
@@ -1901,20 +1901,6 @@ define('package.json!npm', [
             }
         },
         {
-            'name': 'can-diff',
-            'version': '1.4.4',
-            'fileUrl': './node_modules/can-diff/package.json',
-            'main': 'can-diff',
-            'steal': { 'main': 'can-diff' },
-            'resolutions': {
-                'can-reflect': '1.17.9',
-                'can-diff': '1.4.4',
-                'can-key-tree': '1.2.0',
-                'can-symbol': '1.6.4',
-                'can-queues': '1.2.1'
-            }
-        },
-        {
             'name': 'can-attribute-encoder',
             'version': '1.1.2',
             'fileUrl': './node_modules/can-attribute-encoder/package.json',
@@ -1929,6 +1915,20 @@ define('package.json!npm', [
             'resolutions': {
                 'can-namespace': '1.0.0',
                 'can-log': '1.0.0'
+            }
+        },
+        {
+            'name': 'can-diff',
+            'version': '1.4.4',
+            'fileUrl': './node_modules/can-diff/package.json',
+            'main': 'can-diff',
+            'steal': { 'main': 'can-diff' },
+            'resolutions': {
+                'can-reflect': '1.17.9',
+                'can-diff': '1.4.4',
+                'can-key-tree': '1.2.0',
+                'can-symbol': '1.6.4',
+                'can-queues': '1.2.1'
             }
         },
         {
@@ -1996,21 +1996,6 @@ define('package.json!npm', [
             'resolutions': { 'can-namespace': '1.0.0' }
         },
         {
-            'name': 'can-reflect-promise',
-            'version': '2.2.0',
-            'fileUrl': './node_modules/can-reflect-promise/package.json',
-            'main': 'can-reflect-promise',
-            'steal': { 'npmAlgorithm': 'flat' },
-            'resolutions': {
-                'can-reflect': '1.17.9',
-                'can-symbol': '1.6.4',
-                'can-observation-recorder': '1.3.0',
-                'can-queues': '1.2.1',
-                'can-key-tree': '1.2.0',
-                'can-log': '1.0.0'
-            }
-        },
-        {
             'name': 'can-fragment',
             'version': '1.3.0',
             'fileUrl': './node_modules/can-fragment/package.json',
@@ -2029,6 +2014,21 @@ define('package.json!npm', [
                 'can-reflect': '1.17.9',
                 'can-child-nodes': '1.2.0',
                 'can-symbol': '1.6.4'
+            }
+        },
+        {
+            'name': 'can-reflect-promise',
+            'version': '2.2.0',
+            'fileUrl': './node_modules/can-reflect-promise/package.json',
+            'main': 'can-reflect-promise',
+            'steal': { 'npmAlgorithm': 'flat' },
+            'resolutions': {
+                'can-reflect': '1.17.9',
+                'can-symbol': '1.6.4',
+                'can-observation-recorder': '1.3.0',
+                'can-queues': '1.2.1',
+                'can-key-tree': '1.2.0',
+                'can-log': '1.0.0'
             }
         },
         {
@@ -2080,34 +2080,6 @@ define('package.json!npm', [
             'resolutions': { 'can-cid': '1.3.0' }
         },
         {
-            'name': 'can-define-lazy-value',
-            'version': '1.1.0',
-            'fileUrl': './node_modules/can-define-lazy-value/package.json',
-            'main': 'define-lazy-value',
-            'steal': {
-                'npmIgnore': {
-                    'testee': true,
-                    'steal-tools': true
-                }
-            },
-            'resolutions': {}
-        },
-        {
-            'name': 'can-stache-helpers',
-            'version': '1.2.0',
-            'fileUrl': './node_modules/can-stache-helpers/package.json',
-            'main': 'can-stache-helpers',
-            'steal': {
-                'npmIgnore': {
-                    'testee': true,
-                    'generator-donejs': true,
-                    'donejs-cli': true,
-                    'steal-tools': true
-                }
-            },
-            'resolutions': { 'can-namespace': '1.0.0' }
-        },
-        {
             'name': 'can-string-to-any',
             'version': '1.2.0',
             'fileUrl': './node_modules/can-string-to-any/package.json',
@@ -2120,6 +2092,19 @@ define('package.json!npm', [
                     'steal-tools': true
                 },
                 'main': 'can-string-to-any'
+            },
+            'resolutions': {}
+        },
+        {
+            'name': 'can-define-lazy-value',
+            'version': '1.1.0',
+            'fileUrl': './node_modules/can-define-lazy-value/package.json',
+            'main': 'define-lazy-value',
+            'steal': {
+                'npmIgnore': {
+                    'testee': true,
+                    'steal-tools': true
+                }
             },
             'resolutions': {}
         },
@@ -2138,6 +2123,21 @@ define('package.json!npm', [
                 'main': 'can-data-types'
             },
             'resolutions': { 'can-reflect': '1.17.9' }
+        },
+        {
+            'name': 'can-stache-helpers',
+            'version': '1.2.0',
+            'fileUrl': './node_modules/can-stache-helpers/package.json',
+            'main': 'can-stache-helpers',
+            'steal': {
+                'npmIgnore': {
+                    'testee': true,
+                    'generator-donejs': true,
+                    'donejs-cli': true,
+                    'steal-tools': true
+                }
+            },
+            'resolutions': { 'can-namespace': '1.0.0' }
         },
         {
             'name': 'can-attribute-observable',
@@ -2160,6 +2160,24 @@ define('package.json!npm', [
                 'can-dom-data-state': '1.0.5',
                 'can-dom-mutate': '1.3.6',
                 'can-diff': '1.4.4'
+            }
+        },
+        {
+            'name': 'can-view-import',
+            'version': '4.2.1',
+            'fileUrl': './node_modules/can-view-import/package.json',
+            'main': 'can-view-import',
+            'resolutions': {
+                'can-assign': '1.3.1',
+                'can-dom-data-state': '1.0.5',
+                'can-symbol': '1.6.4',
+                'can-globals': '1.2.1',
+                'can-child-nodes': '1.2.0',
+                'can-import-module': '1.2.0',
+                'can-dom-mutate': '1.3.6',
+                'can-view-nodelist': '4.3.3',
+                'can-view-callbacks': '4.3.6',
+                'can-log': '1.0.0'
             }
         },
         {
@@ -2209,30 +2227,12 @@ define('package.json!npm', [
                 'can-child-nodes': '1.2.0',
                 'can-reflect': '1.17.9',
                 'can-reflect-dependencies': '1.1.1',
-                'can-view-callbacks': '4.3.6',
                 'can-queues': '1.2.1',
                 'can-attribute-observable': '1.2.1',
+                'can-view-callbacks': '4.3.6',
                 'can-symbol': '1.6.4',
                 'can-simple-observable': '2.4.1',
                 'can-diff': '1.4.4'
-            }
-        },
-        {
-            'name': 'can-view-import',
-            'version': '4.2.1',
-            'fileUrl': './node_modules/can-view-import/package.json',
-            'main': 'can-view-import',
-            'resolutions': {
-                'can-assign': '1.3.1',
-                'can-dom-data-state': '1.0.5',
-                'can-symbol': '1.6.4',
-                'can-globals': '1.2.1',
-                'can-child-nodes': '1.2.0',
-                'can-import-module': '1.2.0',
-                'can-dom-mutate': '1.3.6',
-                'can-view-nodelist': '4.3.3',
-                'can-view-callbacks': '4.3.6',
-                'can-log': '1.0.0'
             }
         },
         {
@@ -2301,18 +2301,18 @@ define('package.json!npm', [
             'resolutions': {}
         },
         {
+            'name': 'xml-js',
+            'version': '1.6.8',
+            'fileUrl': './node_modules/xml-js/package.json',
+            'main': 'lib/index.js',
+            'resolutions': {}
+        },
+        {
             'name': 'moment',
             'version': '2.23.0',
             'fileUrl': './node_modules/moment/package.json',
             'main': './moment.js',
             'jspm': {},
-            'resolutions': {}
-        },
-        {
-            'name': 'xml-js',
-            'version': '1.6.8',
-            'fileUrl': './node_modules/xml-js/package.json',
-            'main': 'lib/index.js',
             'resolutions': {}
         }
     ], { 'npmParentMap': {} }));
@@ -19719,12 +19719,28 @@ define('pto-tracker@0.1.0#models/api-info', [
     function _interopRequireDefault(obj) {
         return obj && obj.__esModule ? obj : { default: obj };
     }
+    var STORAGE_PROP = 'bitovians/api/token';
     var APIInfo = _map2.default.extend('APIInfo', {
         get isValid() {
-            return this.token && this.url ? this.url.includes('freshbooks') || this.url.includes('billingarm') : false;
+            return this.isValidToken(this.token) && this.url ? this.url.includes('freshbooks') || this.url.includes('billingarm') : false;
         },
-        token: 'string',
-        url: 'string'
+        token: {
+            default: function _default() {
+                return window.localStorage.getItem(STORAGE_PROP);
+            },
+            set: function set(token) {
+                if (token) {
+                    window.localStorage.setItem(STORAGE_PROP, token);
+                    return token;
+                }
+                window.localStorage.removeItem(STORAGE_PROP);
+            }
+        },
+        url: { default: 'https://bitovi.freshbooks.com/api/2.1/xml-in' },
+        isValidToken: function isValidToken(token) {
+            var TOKEN_VALIDATE = /\b[0-9a-f]{5,40}\b/;
+            return token && TOKEN_VALIDATE.test(token);
+        }
     });
     exports.default = APIInfo;
 });

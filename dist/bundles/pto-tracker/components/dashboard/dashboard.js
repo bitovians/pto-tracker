@@ -9233,7 +9233,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
         {
             'tokenType': 'attrValue',
             'args': [
-                'second-step display-wrapper',
+                'logout',
                 1
             ]
         },
@@ -9262,7 +9262,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
         {
             'tokenType': 'start',
             'args': [
-                'div',
+                'a',
                 false,
                 2
             ]
@@ -9270,22 +9270,152 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
         {
             'tokenType': 'attrStart',
             'args': [
-                'class',
+                'href',
                 2
+            ]
+        },
+        {
+            'tokenType': 'attrEnd',
+            'args': [
+                'href',
+                2
+            ]
+        },
+        {
+            'tokenType': 'attrStart',
+            'args': [
+                'on:click',
+                2
+            ]
+        },
+        {
+            'tokenType': 'attrValue',
+            'args': [
+                'clearAPIToken(scope.event)',
+                2
+            ]
+        },
+        {
+            'tokenType': 'attrEnd',
+            'args': [
+                'on:click',
+                2
+            ]
+        },
+        {
+            'tokenType': 'end',
+            'args': [
+                'a',
+                false,
+                2
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                'Clear API Token',
+                2
+            ]
+        },
+        {
+            'tokenType': 'close',
+            'args': [
+                'a',
+                2
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                '\n',
+                2
+            ]
+        },
+        {
+            'tokenType': 'close',
+            'args': [
+                'div',
+                3
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                '\n',
+                3
+            ]
+        },
+        {
+            'tokenType': 'start',
+            'args': [
+                'div',
+                false,
+                4
+            ]
+        },
+        {
+            'tokenType': 'attrStart',
+            'args': [
+                'class',
+                4
+            ]
+        },
+        {
+            'tokenType': 'attrValue',
+            'args': [
+                'display-wrapper',
+                4
+            ]
+        },
+        {
+            'tokenType': 'attrEnd',
+            'args': [
+                'class',
+                4
+            ]
+        },
+        {
+            'tokenType': 'end',
+            'args': [
+                'div',
+                false,
+                4
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                '\n  ',
+                4
+            ]
+        },
+        {
+            'tokenType': 'start',
+            'args': [
+                'div',
+                false,
+                5
+            ]
+        },
+        {
+            'tokenType': 'attrStart',
+            'args': [
+                'class',
+                5
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'number-wrapper',
-                2
+                5
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                2
+                5
             ]
         },
         {
@@ -9293,14 +9423,14 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'div',
                 false,
-                2
+                5
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                2
+                5
             ]
         },
         {
@@ -9308,28 +9438,28 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'div',
                 false,
-                3
+                6
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'class',
-                3
+                6
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'hours-container',
-                3
+                6
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                3
+                6
             ]
         },
         {
@@ -9337,28 +9467,28 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'div',
                 false,
-                3
+                6
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 ' ',
-                3
+                6
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '#if(remainingHours)',
-                3
+                6
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n        ',
-                3
+                6
             ]
         },
         {
@@ -9366,7 +9496,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                4
+                7
             ]
         },
         {
@@ -9374,42 +9504,42 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                4
+                7
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'remainingHours',
-                4
+                7
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h1',
-                4
+                7
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                4
+                7
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'else',
-                5
+                8
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n        ',
-                5
+                8
             ]
         },
         {
@@ -9417,7 +9547,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                6
+                9
             ]
         },
         {
@@ -9425,42 +9555,42 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                6
+                9
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '--',
-                6
+                9
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h1',
-                6
+                9
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                6
+                9
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '/if',
-                7
+                10
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                7
+                10
             ]
         },
         {
@@ -9468,7 +9598,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h4',
                 false,
-                8
+                11
             ]
         },
         {
@@ -9476,42 +9606,42 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h4',
                 false,
-                8
+                11
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 'hours available',
-                8
+                11
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h4',
-                8
+                11
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                8
+                11
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                9
+                12
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                9
+                12
             ]
         },
         {
@@ -9519,28 +9649,28 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'div',
                 false,
-                10
+                13
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'class',
-                10
+                13
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'days-container',
-                10
+                13
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                10
+                13
             ]
         },
         {
@@ -9548,28 +9678,28 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'div',
                 false,
-                10
+                13
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                10
+                13
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '#if(remainingHours)',
-                11
+                14
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n        ',
-                11
+                14
             ]
         },
         {
@@ -9577,7 +9707,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                12
+                15
             ]
         },
         {
@@ -9585,42 +9715,42 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                12
+                15
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'remainingDays',
-                12
+                15
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h1',
-                12
+                15
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                12
+                15
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'else',
-                13
+                16
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n        ',
-                13
+                16
             ]
         },
         {
@@ -9628,7 +9758,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                14
+                17
             ]
         },
         {
@@ -9636,42 +9766,42 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h1',
                 false,
-                14
+                17
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '--',
-                14
+                17
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h1',
-                14
+                17
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                14
+                17
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '/if',
-                15
+                18
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n\n      ',
-                15
+                18
             ]
         },
         {
@@ -9679,7 +9809,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h4',
                 false,
-                17
+                20
             ]
         },
         {
@@ -9687,75 +9817,75 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
             'args': [
                 'h4',
                 false,
-                17
+                20
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 'days available',
-                17
+                20
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h4',
-                17
+                20
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                17
+                20
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                18
+                21
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n  ',
-                18
+                21
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                19
+                22
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n',
-                19
+                22
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                20
+                23
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n',
-                20
+                23
             ]
         },
         {
             'tokenType': 'done',
-            'args': [21]
+            'args': [24]
         }
     ]);
     return function (scope, options, nodeList) {
@@ -9983,6 +10113,10 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard', [
             },
             get totalUsedByYear() {
                 return this.totalUsedHoursByYear(this.timeEntries.allTimeOff);
+            },
+            clearAPIToken: function clearAPIToken(ev) {
+                ev.preventDefault();
+                this.apiInfo.token = undefined;
             },
             hoursPerMonth: function hoursPerMonth(anniversary) {
                 var HOURS_PER_MONTH = [
