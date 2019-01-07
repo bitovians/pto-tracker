@@ -9128,7 +9128,6 @@ define('pto-tracker@0.1.0#models/time-entries', [
                 if (lastSet)
                     return lastSet;
                 var promised = [];
-                var today = (0, _moment2.default)();
                 this.requestEntries(1, true).then(function (entries) {
                     promised.push(Promise.resolve(entries));
                     var current = 2;
@@ -9139,17 +9138,7 @@ define('pto-tracker@0.1.0#models/time-entries', [
                     }
                     Promise.all(promised).then(function (results) {
                         var collected = results.map(function (r) {
-                            var entries = [];
-                            r.response.time_entries.time_entry.forEach(function (e) {
-                                var date = (0, _moment2.default)(e.date._text, 'YYYY-MM-DD');
-                                if (date.isBefore(today) || date.isSame(today)) {
-                                    entries.push({
-                                        date: e.date._text,
-                                        hours: e.hours._text
-                                    });
-                                }
-                            });
-                            return entries;
+                            return _this.collectTimeEntries([], r.response.time_entries.time_entry);
                         });
                         resolve([].concat.apply([], collected));
                     });
@@ -9159,6 +9148,20 @@ define('pto-tracker@0.1.0#models/time-entries', [
         apiInfo: { Type: _apiInfo2.default },
         firstDay: 'string',
         lastDay: 'string',
+        collectTimeEntries: function collectTimeEntries(collection, data) {
+            var today = (0, _moment2.default)();
+            var entries = [].concat(data);
+            entries.forEach(function (e) {
+                var date = (0, _moment2.default)(e.date._text, 'YYYY-MM-DD');
+                if (date.isBefore(today) || date.isSame(today)) {
+                    collection.push({
+                        date: e.date._text,
+                        hours: e.hours._text
+                    });
+                }
+            });
+            return collection;
+        },
         howManyPages: function howManyPages(entries) {
             return parseInt(entries.response.time_entries._attributes.pages);
         },

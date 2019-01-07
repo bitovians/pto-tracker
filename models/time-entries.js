@@ -15,7 +15,6 @@ export default DefineMap.extend('TimeEntries', {
       if (lastSet) return lastSet
 
       const promised = []
-      const today = moment()
       this.requestEntries(1, true).then(entries => {
         promised.push(Promise.resolve(entries))
 
@@ -27,14 +26,7 @@ export default DefineMap.extend('TimeEntries', {
         }
         Promise.all(promised).then(results => {
           const collected = results.map(r => {
-            const entries = []
-            r.response.time_entries.time_entry.forEach(e => {
-              const date = moment(e.date._text, 'YYYY-MM-DD')
-              if (date.isBefore(today) || date.isSame(today)) {
-                entries.push({ date: e.date._text, hours: e.hours._text })
-              }
-            })
-            return entries
+            return this.collectTimeEntries([], r.response.time_entries.time_entry)
           })
           resolve([].concat.apply([], collected))
         })
@@ -49,6 +41,18 @@ export default DefineMap.extend('TimeEntries', {
   firstDay: 'string',
 
   lastDay: 'string',
+
+  collectTimeEntries (collection, data) {
+    const today = moment()
+    const entries = [].concat(data)
+    entries.forEach(e => {
+      const date = moment(e.date._text, 'YYYY-MM-DD')
+      if (date.isBefore(today) || date.isSame(today)) {
+        collection.push({ date: e.date._text, hours: e.hours._text })
+      }
+    })
+    return collection
+  },
 
   howManyPages (entries) {
     return parseInt(entries.response.time_entries._attributes.pages)
