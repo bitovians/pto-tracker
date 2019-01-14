@@ -1,4 +1,4 @@
-<h1>Bitovi PTO Tracker</h1>
+<h1>Bitovi PTO Available</h1>
 <div class="first-step form-wrapper">
   <form>
     <label for="token" {{#unless(validToken)}}class="invalid-token"{{/if}}>

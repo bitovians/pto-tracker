@@ -1,5 +1,5 @@
-/*pto-tracker@0.1.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache*/
-define('pto-tracker@0.1.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache', [
+/*pto-tracker@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache*/
+define('pto-tracker@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache', [
     'module',
     'can-stache',
     'can-stache/src/mustache_core',
@@ -26,7 +26,7 @@ define('pto-tracker@0.1.0#components/authenticate/authenticate.stache!steal-stac
         {
             'tokenType': 'chars',
             'args': [
-                'Bitovi PTO Tracker',
+                'Bitovi PTO Available',
                 1
             ]
         },
@@ -565,12 +565,12 @@ define('pto-tracker@0.1.0#components/authenticate/authenticate.stache!steal-stac
         return renderer(scope, moduleOptions, nodeList);
     };
 });
-/*pto-tracker@0.1.0#components/authenticate/authenticate*/
-define('pto-tracker@0.1.0#components/authenticate/authenticate', [
-    'pto-tracker@0.1.0#models/api-info',
-    'pto-tracker@0.1.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache',
+/*pto-tracker@1.0.0#components/authenticate/authenticate*/
+define('pto-tracker@1.0.0#components/authenticate/authenticate', [
+    'pto-tracker@1.0.0#models/api-info',
+    'pto-tracker@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache',
     'can-component@4.4.11#can-component',
-    'can@5.21.4#enable-can-debug',
+    'can@5.21.5#enable-can-debug',
     'can-debug@2.0.5#can-debug',
     'can-namespace@1.0.0#can-namespace',
     'can-globals@1.2.1#can-globals',
@@ -623,10 +623,10 @@ define('pto-tracker@0.1.0#components/authenticate/authenticate', [
     'can-queues@1.2.1#completion-queue',
     'can-diff@1.4.4#merge-deep/merge-deep',
     'can-diff@1.4.4#list/list',
-    'can-define@2.7.5#map/map',
-    'can-construct@3.5.3#can-construct',
+    'can-define@2.7.8#map/map',
+    'can-construct@3.5.4#can-construct',
     'can-string@1.0.0#can-string',
-    'can-define@2.7.5#can-define',
+    'can-define@2.7.8#can-define',
     'can-observation@4.1.2#can-observation',
     'can-observation-recorder@1.3.0#can-observation-recorder',
     'can-event-queue@1.1.4#value/value',
@@ -651,8 +651,8 @@ define('pto-tracker@0.1.0#components/authenticate/authenticate', [
     'can-data-types@1.2.0#maybe-date/maybe-date',
     'can-data-types@1.2.0#maybe-number/maybe-number',
     'can-data-types@1.2.0#maybe-string/maybe-string',
-    'can-define@2.7.5#define-helpers/define-helpers',
-    'can-define@2.7.5#ensure-meta',
+    'can-define@2.7.8#define-helpers/define-helpers',
+    'can-define@2.7.8#ensure-meta',
     'can-component@4.4.11#control/control',
     'can-control@4.4.1#can-control',
     'can-stache-key@1.4.0#can-stache-key',
@@ -728,7 +728,7 @@ define('pto-tracker@0.1.0#components/authenticate/authenticate', [
     'can-attribute-observable@1.2.1#event',
     'can-attribute-observable@1.2.1#get-event-name',
     'can-event-dom-radiochange@2.2.0#can-event-dom-radiochange',
-    'can-define@2.7.5#list/list',
+    'can-define@2.7.8#list/list',
     'can-view-import@4.2.1#can-view-import'
 ], function (_apiInfo, _authenticateStacheStealStache, _canComponent) {
     'use strict';
@@ -739,7 +739,7 @@ define('pto-tracker@0.1.0#components/authenticate/authenticate', [
         return obj && obj.__esModule ? obj : { default: obj };
     }
     _canComponent2.default.extend({
-        tag: 'pto-authenticate',
+        tag: 'bitovian-pto-authenticate',
         view: _authenticateStacheStealStache2.default,
         ViewModel: {
             apiInfo: { Type: _apiInfo2.default },

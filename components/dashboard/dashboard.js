@@ -7,7 +7,7 @@ import TimeEntries from '~/models/time-entries'
 import view from './dashboard.stache'
 
 Component.extend({
-  tag: 'pto-dashboard',
+  tag: 'bitovian-pto-dashboard',
   view,
   ViewModel: {
     apiInfo: {

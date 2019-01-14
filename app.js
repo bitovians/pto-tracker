@@ -5,7 +5,7 @@ import view from '~/app.stache'
 import 'styles.less'
 
 Component.extend({
-  tag: 'pto-tracker',
+  tag: 'bitovian-pto',
   view,
   ViewModel: {
     get isAuthenticated () {

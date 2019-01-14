@@ -5490,8 +5490,8 @@
         root._ = _;
     }
 }.call(this));
-/*xml-js@1.6.8#dist/xml-js*/
-define('xml-js@1.6.8#dist/xml-js', [
+/*xml-js@1.6.9#dist/xml-js*/
+define('xml-js@1.6.9#dist/xml-js', [
     'module',
     '@loader',
     'require'
@@ -9098,14 +9098,14 @@ define('xml-js@1.6.8#dist/xml-js', [
     };
     return hooks;
 }));
-/*pto-tracker@0.1.0#models/time-entries*/
-define('pto-tracker@0.1.0#models/time-entries', [
+/*pto-tracker@1.0.0#models/time-entries*/
+define('pto-tracker@1.0.0#models/time-entries', [
     'exports',
-    'xml-js@1.6.8#dist/xml-js',
+    'xml-js@1.6.9#dist/xml-js',
     'moment@2.23.0#moment',
-    'pto-tracker@0.1.0#models/api-info',
-    'can-define@2.7.5#map/map',
-    'can@5.21.4#enable-can-debug',
+    'pto-tracker@1.0.0#models/api-info',
+    'can-define@2.7.8#map/map',
+    'can@5.21.5#enable-can-debug',
     'can-component@4.4.11#can-component'
 ], function (exports, _xmlJs, _moment, _apiInfo, _map) {
     'use strict';
@@ -9206,8 +9206,8 @@ define('pto-tracker@0.1.0#models/time-entries', [
     });
     exports.default = TimeEntries;
 });
-/*pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache*/
-define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache', [
+/*pto-tracker@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache*/
+define('pto-tracker@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache', [
     'module',
     'can-stache',
     'can-stache/src/mustache_core',
@@ -9898,14 +9898,14 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1
         return renderer(scope, moduleOptions, nodeList);
     };
 });
-/*pto-tracker@0.1.0#components/dashboard/dashboard*/
-define('pto-tracker@0.1.0#components/dashboard/dashboard', [
+/*pto-tracker@1.0.0#components/dashboard/dashboard*/
+define('pto-tracker@1.0.0#components/dashboard/dashboard', [
     'lodash@4.17.11#lodash',
-    'pto-tracker@0.1.0#models/api-info',
-    'pto-tracker@0.1.0#models/time-entries',
-    'pto-tracker@0.1.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache',
+    'pto-tracker@1.0.0#models/api-info',
+    'pto-tracker@1.0.0#models/time-entries',
+    'pto-tracker@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache',
     'can-component@4.4.11#can-component',
-    'can@5.21.4#enable-can-debug',
+    'can@5.21.5#enable-can-debug',
     'can-debug@2.0.5#can-debug',
     'can-namespace@1.0.0#can-namespace',
     'can-globals@1.2.1#can-globals',
@@ -9958,10 +9958,10 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard', [
     'can-queues@1.2.1#completion-queue',
     'can-diff@1.4.4#merge-deep/merge-deep',
     'can-diff@1.4.4#list/list',
-    'can-define@2.7.5#map/map',
-    'can-construct@3.5.3#can-construct',
+    'can-define@2.7.8#map/map',
+    'can-construct@3.5.4#can-construct',
     'can-string@1.0.0#can-string',
-    'can-define@2.7.5#can-define',
+    'can-define@2.7.8#can-define',
     'can-observation@4.1.2#can-observation',
     'can-observation-recorder@1.3.0#can-observation-recorder',
     'can-event-queue@1.1.4#value/value',
@@ -9986,8 +9986,8 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard', [
     'can-data-types@1.2.0#maybe-date/maybe-date',
     'can-data-types@1.2.0#maybe-number/maybe-number',
     'can-data-types@1.2.0#maybe-string/maybe-string',
-    'can-define@2.7.5#define-helpers/define-helpers',
-    'can-define@2.7.5#ensure-meta',
+    'can-define@2.7.8#define-helpers/define-helpers',
+    'can-define@2.7.8#ensure-meta',
     'can-component@4.4.11#control/control',
     'can-control@4.4.1#can-control',
     'can-stache-key@1.4.0#can-stache-key',
@@ -10063,8 +10063,8 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard', [
     'can-attribute-observable@1.2.1#event',
     'can-attribute-observable@1.2.1#get-event-name',
     'can-event-dom-radiochange@2.2.0#can-event-dom-radiochange',
-    'can-define@2.7.5#list/list',
-    'xml-js@1.6.8#dist/xml-js',
+    'can-define@2.7.8#list/list',
+    'xml-js@1.6.9#dist/xml-js',
     'moment@2.23.0#moment',
     'can-view-import@4.2.1#can-view-import'
 ], function (_lodash, _apiInfo, _timeEntries, _dashboardStacheStealStache, _canComponent) {
@@ -10078,7 +10078,7 @@ define('pto-tracker@0.1.0#components/dashboard/dashboard', [
         return obj && obj.__esModule ? obj : { default: obj };
     }
     _canComponent2.default.extend({
-        tag: 'pto-dashboard',
+        tag: 'bitovian-pto-dashboard',
         view: _dashboardStacheStealStache2.default,
         ViewModel: {
             apiInfo: { Type: _apiInfo2.default },
