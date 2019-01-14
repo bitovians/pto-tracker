@@ -5,7 +5,7 @@ import APIInfo from '~/models/api-info'
 import view from './authenticate.stache'
 
 Component.extend({
-  tag: 'bitovian-pto-authenticate',
+  tag: 'pto-authenticate',
   view,
   ViewModel: {
     apiInfo: {

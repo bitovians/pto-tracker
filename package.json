@@ -1,5 +1,5 @@
 {
-  "name": "bitovian-pto",
+  "name": "bitovians-pto",
   "version": "1.0.0",
   "description": "Freshbooks-integrated PTO tracking for Bitovi employees",
   "main": "app.js",

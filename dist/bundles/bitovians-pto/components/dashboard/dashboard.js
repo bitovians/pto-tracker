@@ -9098,12 +9098,12 @@ define('xml-js@1.6.9#dist/xml-js', [
     };
     return hooks;
 }));
-/*bitovian-pto@1.0.0#models/time-entries*/
-define('bitovian-pto@1.0.0#models/time-entries', [
+/*bitovians-pto@1.0.0#models/time-entries*/
+define('bitovians-pto@1.0.0#models/time-entries', [
     'exports',
     'xml-js@1.6.9#dist/xml-js',
     'moment@2.23.0#moment',
-    'bitovian-pto@1.0.0#models/api-info',
+    'bitovians-pto@1.0.0#models/api-info',
     'can-define@2.7.8#map/map',
     'can@5.21.5#enable-can-debug',
     'can-component@4.4.11#can-component'
@@ -9206,8 +9206,8 @@ define('bitovian-pto@1.0.0#models/time-entries', [
     });
     exports.default = TimeEntries;
 });
-/*bitovian-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache*/
-define('bitovian-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache', [
+/*bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache*/
+define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache', [
     'module',
     'can-stache',
     'can-stache/src/mustache_core',
@@ -9898,12 +9898,12 @@ define('bitovian-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.
         return renderer(scope, moduleOptions, nodeList);
     };
 });
-/*bitovian-pto@1.0.0#components/dashboard/dashboard*/
-define('bitovian-pto@1.0.0#components/dashboard/dashboard', [
+/*bitovians-pto@1.0.0#components/dashboard/dashboard*/
+define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
     'lodash@4.17.11#lodash',
-    'bitovian-pto@1.0.0#models/api-info',
-    'bitovian-pto@1.0.0#models/time-entries',
-    'bitovian-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache',
+    'bitovians-pto@1.0.0#models/api-info',
+    'bitovians-pto@1.0.0#models/time-entries',
+    'bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache',
     'can-component@4.4.11#can-component',
     'can@5.21.5#enable-can-debug',
     'can-debug@2.0.5#can-debug',
@@ -10078,7 +10078,7 @@ define('bitovian-pto@1.0.0#components/dashboard/dashboard', [
         return obj && obj.__esModule ? obj : { default: obj };
     }
     _canComponent2.default.extend({
-        tag: 'bitovian-pto-dashboard',
+        tag: 'pto-dashboard',
         view: _dashboardStacheStealStache2.default,
         ViewModel: {
             apiInfo: { Type: _apiInfo2.default },

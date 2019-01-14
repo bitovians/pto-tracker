@@ -1,5 +1,5 @@
-/*pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache*/
-define('pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache', [
+/*bitovians-pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache*/
+define('bitovians-pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache', [
     'module',
     'can-stache',
     'can-stache/src/mustache_core',
@@ -565,10 +565,10 @@ define('pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2
         return renderer(scope, moduleOptions, nodeList);
     };
 });
-/*pto@1.0.0#components/authenticate/authenticate*/
-define('pto@1.0.0#components/authenticate/authenticate', [
-    'pto@1.0.0#models/api-info',
-    'pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache',
+/*bitovians-pto@1.0.0#components/authenticate/authenticate*/
+define('bitovians-pto@1.0.0#components/authenticate/authenticate', [
+    'bitovians-pto@1.0.0#models/api-info',
+    'bitovians-pto@1.0.0#components/authenticate/authenticate.stache!steal-stache@4.1.2#steal-stache',
     'can-component@4.4.11#can-component',
     'can@5.21.5#enable-can-debug',
     'can-debug@2.0.5#can-debug',
@@ -739,7 +739,7 @@ define('pto@1.0.0#components/authenticate/authenticate', [
         return obj && obj.__esModule ? obj : { default: obj };
     }
     _canComponent2.default.extend({
-        tag: 'bitovian-pto-authenticate',
+        tag: 'pto-authenticate',
         view: _authenticateStacheStealStache2.default,
         ViewModel: {
             apiInfo: { Type: _apiInfo2.default },
