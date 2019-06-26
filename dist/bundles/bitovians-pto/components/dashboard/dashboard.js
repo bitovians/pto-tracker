@@ -5490,8 +5490,8 @@
         root._ = _;
     }
 }.call(this));
-/*xml-js@1.6.9#dist/xml-js*/
-define('xml-js@1.6.9#dist/xml-js', [
+/*xml-js@1.6.11#dist/xml-js*/
+define('xml-js@1.6.11#dist/xml-js', [
     'module',
     '@loader',
     'require'
@@ -5515,10 +5515,10 @@ define('xml-js@1.6.9#dist/xml-js', [
     loader.global.define = define;
     return loader.get('@@global-helpers').retrieveGlobal(module.id, undefined);
 });
-/*moment@2.23.0#moment*/
+/*moment@2.24.0#moment*/
 ;
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define('moment@2.23.0#moment', factory) : global.moment = factory();
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define('moment@2.24.0#moment', factory) : global.moment = factory();
 }(this, function () {
     'use strict';
     var hookCallback;
@@ -6430,16 +6430,28 @@ define('xml-js@1.6.9#dist/xml-js', [
         this._monthsShortStrictRegex = new RegExp('^(' + shortPieces.join('|') + ')', 'i');
     }
     function createDate(y, m, d, h, M, s, ms) {
-        var date = new Date(y, m, d, h, M, s, ms);
-        if (y < 100 && y >= 0 && isFinite(date.getFullYear())) {
-            date.setFullYear(y);
+        var date;
+        if (y < 100 && y >= 0) {
+            date = new Date(y + 400, m, d, h, M, s, ms);
+            if (isFinite(date.getFullYear())) {
+                date.setFullYear(y);
+            }
+        } else {
+            date = new Date(y, m, d, h, M, s, ms);
         }
         return date;
     }
     function createUTCDate(y) {
-        var date = new Date(Date.UTC.apply(null, arguments));
-        if (y < 100 && y >= 0 && isFinite(date.getUTCFullYear())) {
-            date.setUTCFullYear(y);
+        var date;
+        if (y < 100 && y >= 0) {
+            var args = Array.prototype.slice.call(arguments);
+            args[0] = y + 400;
+            date = new Date(Date.UTC.apply(null, args));
+            if (isFinite(date.getUTCFullYear())) {
+                date.setUTCFullYear(y);
+            }
+        } else {
+            date = new Date(Date.UTC.apply(null, arguments));
         }
         return date;
     }
@@ -6598,20 +6610,21 @@ define('xml-js@1.6.9#dist/xml-js', [
         }
         return isNaN(input) ? null : input;
     }
+    function shiftWeekdays(ws, n) {
+        return ws.slice(n, 7).concat(ws.slice(0, n));
+    }
     var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
     function localeWeekdays(m, format) {
-        if (!m) {
-            return isArray(this._weekdays) ? this._weekdays : this._weekdays['standalone'];
-        }
-        return isArray(this._weekdays) ? this._weekdays[m.day()] : this._weekdays[this._weekdays.isFormat.test(format) ? 'format' : 'standalone'][m.day()];
+        var weekdays = isArray(this._weekdays) ? this._weekdays : this._weekdays[m && m !== true && this._weekdays.isFormat.test(format) ? 'format' : 'standalone'];
+        return m === true ? shiftWeekdays(weekdays, this._week.dow) : m ? weekdays[m.day()] : weekdays;
     }
     var defaultLocaleWeekdaysShort = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_');
     function localeWeekdaysShort(m) {
-        return m ? this._weekdaysShort[m.day()] : this._weekdaysShort;
+        return m === true ? shiftWeekdays(this._weekdaysShort, this._week.dow) : m ? this._weekdaysShort[m.day()] : this._weekdaysShort;
     }
     var defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_');
     function localeWeekdaysMin(m) {
-        return m ? this._weekdaysMin[m.day()] : this._weekdaysMin;
+        return m === true ? shiftWeekdays(this._weekdaysMin, this._week.dow) : m ? this._weekdaysMin[m.day()] : this._weekdaysMin;
     }
     function handleStrictParse$1(weekdayName, format, strict) {
         var i, ii, mom, llc = weekdayName.toLocaleLowerCase();
@@ -7975,10 +7988,7 @@ define('xml-js@1.6.9#dist/xml-js', [
         return (isNaN(res) ? 0 : res) * sign;
     }
     function positiveMomentsDifference(base, other) {
-        var res = {
-            milliseconds: 0,
-            months: 0
-        };
+        var res = {};
         res.months = other.month() - base.month() + (other.year() - base.year()) * 12;
         if (base.clone().add(res.months, 'M').isAfter(other)) {
             --res.months;
@@ -8249,46 +8259,114 @@ define('xml-js@1.6.9#dist/xml-js', [
     function localeData() {
         return this._locale;
     }
+    var MS_PER_SECOND = 1000;
+    var MS_PER_MINUTE = 60 * MS_PER_SECOND;
+    var MS_PER_HOUR = 60 * MS_PER_MINUTE;
+    var MS_PER_400_YEARS = (365 * 400 + 97) * 24 * MS_PER_HOUR;
+    function mod$1(dividend, divisor) {
+        return (dividend % divisor + divisor) % divisor;
+    }
+    function localStartOfDate(y, m, d) {
+        if (y < 100 && y >= 0) {
+            return new Date(y + 400, m, d) - MS_PER_400_YEARS;
+        } else {
+            return new Date(y, m, d).valueOf();
+        }
+    }
+    function utcStartOfDate(y, m, d) {
+        if (y < 100 && y >= 0) {
+            return Date.UTC(y + 400, m, d) - MS_PER_400_YEARS;
+        } else {
+            return Date.UTC(y, m, d);
+        }
+    }
     function startOf(units) {
+        var time;
         units = normalizeUnits(units);
+        if (units === undefined || units === 'millisecond' || !this.isValid()) {
+            return this;
+        }
+        var startOfDate = this._isUTC ? utcStartOfDate : localStartOfDate;
         switch (units) {
         case 'year':
-            this.month(0);
+            time = startOfDate(this.year(), 0, 1);
+            break;
         case 'quarter':
+            time = startOfDate(this.year(), this.month() - this.month() % 3, 1);
+            break;
         case 'month':
-            this.date(1);
+            time = startOfDate(this.year(), this.month(), 1);
+            break;
         case 'week':
+            time = startOfDate(this.year(), this.month(), this.date() - this.weekday());
+            break;
         case 'isoWeek':
+            time = startOfDate(this.year(), this.month(), this.date() - (this.isoWeekday() - 1));
+            break;
         case 'day':
         case 'date':
-            this.hours(0);
+            time = startOfDate(this.year(), this.month(), this.date());
+            break;
         case 'hour':
-            this.minutes(0);
+            time = this._d.valueOf();
+            time -= mod$1(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR);
+            break;
         case 'minute':
-            this.seconds(0);
+            time = this._d.valueOf();
+            time -= mod$1(time, MS_PER_MINUTE);
+            break;
         case 'second':
-            this.milliseconds(0);
+            time = this._d.valueOf();
+            time -= mod$1(time, MS_PER_SECOND);
+            break;
         }
-        if (units === 'week') {
-            this.weekday(0);
-        }
-        if (units === 'isoWeek') {
-            this.isoWeekday(1);
-        }
-        if (units === 'quarter') {
-            this.month(Math.floor(this.month() / 3) * 3);
-        }
+        this._d.setTime(time);
+        hooks.updateOffset(this, true);
         return this;
     }
     function endOf(units) {
+        var time;
         units = normalizeUnits(units);
-        if (units === undefined || units === 'millisecond') {
+        if (units === undefined || units === 'millisecond' || !this.isValid()) {
             return this;
         }
-        if (units === 'date') {
-            units = 'day';
+        var startOfDate = this._isUTC ? utcStartOfDate : localStartOfDate;
+        switch (units) {
+        case 'year':
+            time = startOfDate(this.year() + 1, 0, 1) - 1;
+            break;
+        case 'quarter':
+            time = startOfDate(this.year(), this.month() - this.month() % 3 + 3, 1) - 1;
+            break;
+        case 'month':
+            time = startOfDate(this.year(), this.month() + 1, 1) - 1;
+            break;
+        case 'week':
+            time = startOfDate(this.year(), this.month(), this.date() - this.weekday() + 7) - 1;
+            break;
+        case 'isoWeek':
+            time = startOfDate(this.year(), this.month(), this.date() - (this.isoWeekday() - 1) + 7) - 1;
+            break;
+        case 'day':
+        case 'date':
+            time = startOfDate(this.year(), this.month(), this.date() + 1) - 1;
+            break;
+        case 'hour':
+            time = this._d.valueOf();
+            time += MS_PER_HOUR - mod$1(time + (this._isUTC ? 0 : this.utcOffset() * MS_PER_MINUTE), MS_PER_HOUR) - 1;
+            break;
+        case 'minute':
+            time = this._d.valueOf();
+            time += MS_PER_MINUTE - mod$1(time, MS_PER_MINUTE) - 1;
+            break;
+        case 'second':
+            time = this._d.valueOf();
+            time += MS_PER_SECOND - mod$1(time, MS_PER_SECOND) - 1;
+            break;
         }
-        return this.startOf(units).add(1, units === 'isoWeek' ? 'week' : units).subtract(1, 'ms');
+        this._d.setTime(time);
+        hooks.updateOffset(this, true);
+        return this;
     }
     function valueOf() {
         return this._d.valueOf() - (this._offset || 0) * 60000;
@@ -8832,10 +8910,17 @@ define('xml-js@1.6.9#dist/xml-js', [
         var months;
         var milliseconds = this._milliseconds;
         units = normalizeUnits(units);
-        if (units === 'month' || units === 'year') {
+        if (units === 'month' || units === 'quarter' || units === 'year') {
             days = this._days + milliseconds / 86400000;
             months = this._months + daysToMonths(days);
-            return units === 'month' ? months : months / 12;
+            switch (units) {
+            case 'month':
+                return months;
+            case 'quarter':
+                return months / 3;
+            case 'year':
+                return months / 12;
+            }
         } else {
             days = this._days + Math.round(monthsToDays(this._months));
             switch (units) {
@@ -8874,6 +8959,7 @@ define('xml-js@1.6.9#dist/xml-js', [
     var asDays = makeAs('d');
     var asWeeks = makeAs('w');
     var asMonths = makeAs('M');
+    var asQuarters = makeAs('Q');
     var asYears = makeAs('y');
     function clone$1() {
         return createDuration(this);
@@ -9025,6 +9111,7 @@ define('xml-js@1.6.9#dist/xml-js', [
     proto$2.asDays = asDays;
     proto$2.asWeeks = asWeeks;
     proto$2.asMonths = asMonths;
+    proto$2.asQuarters = asQuarters;
     proto$2.asYears = asYears;
     proto$2.valueOf = valueOf$1;
     proto$2._bubble = bubble;
@@ -9056,7 +9143,7 @@ define('xml-js@1.6.9#dist/xml-js', [
     addParseToken('x', function (input, array, config) {
         config._d = new Date(toInt(input));
     });
-    hooks.version = '2.23.0';
+    hooks.version = '2.24.0';
     setHookCallback(createLocal);
     hooks.fn = proto;
     hooks.min = min;
@@ -9101,12 +9188,12 @@ define('xml-js@1.6.9#dist/xml-js', [
 /*bitovians-pto@1.0.0#models/time-entries*/
 define('bitovians-pto@1.0.0#models/time-entries', [
     'exports',
-    'xml-js@1.6.9#dist/xml-js',
-    'moment@2.23.0#moment',
+    'xml-js@1.6.11#dist/xml-js',
+    'moment@2.24.0#moment',
     'bitovians-pto@1.0.0#models/api-info',
-    'can-define@2.7.9#map/map',
-    'can@5.21.6#enable-can-debug',
-    'can-component@4.4.11#can-component'
+    'can-define@2.7.18#map/map',
+    'can@5.28.4#enable-can-debug',
+    'can-component@4.6.2#can-component'
 ], function (exports, _xmlJs, _moment, _apiInfo, _map) {
     'use strict';
     Object.defineProperty(exports, '__esModule', { value: true });
@@ -9206,13 +9293,13 @@ define('bitovians-pto@1.0.0#models/time-entries', [
     });
     exports.default = TimeEntries;
 });
-/*bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache*/
-define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache', [
+/*bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.4#steal-stache*/
+define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.4#steal-stache', [
     'module',
     'can-stache',
     'can-stache/src/mustache_core',
-    'can-view-import@4.2.1#can-view-import',
-    'can-stache-bindings@4.8.0#can-stache-bindings'
+    'can-view-import@4.2.2#can-view-import',
+    'can-stache-bindings@4.10.8#can-stache-bindings'
 ], function (module, stache, mustacheCore) {
     var renderer = stache('components/dashboard/dashboard.stache', [
         {
@@ -9903,170 +9990,169 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
     'lodash@4.17.11#lodash',
     'bitovians-pto@1.0.0#models/api-info',
     'bitovians-pto@1.0.0#models/time-entries',
-    'bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.2#steal-stache',
-    'can-component@4.4.11#can-component',
-    'can@5.21.6#enable-can-debug',
-    'can-debug@2.0.5#can-debug',
+    'bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.4#steal-stache',
+    'can-component@4.6.2#can-component',
+    'can@5.28.4#enable-can-debug',
+    'can-debug@2.0.7#can-debug',
     'can-namespace@1.0.0#can-namespace',
-    'can-globals@1.2.1#can-globals',
-    'can-globals@1.2.1#can-globals-instance',
-    'can-globals@1.2.1#can-globals-proto',
-    'can-reflect@1.17.9#can-reflect',
-    'can-reflect@1.17.9#reflections/call/call',
-    'can-symbol@1.6.4#can-symbol',
-    'can-reflect@1.17.9#reflections/type/type',
-    'can-reflect@1.17.9#reflections/helpers',
-    'can-reflect@1.17.9#reflections/get-set/get-set',
-    'can-reflect@1.17.9#reflections/observe/observe',
-    'can-reflect@1.17.9#reflections/shape/shape',
-    'can-reflect@1.17.9#reflections/shape/schema/schema',
-    'can-reflect@1.17.9#reflections/get-name/get-name',
-    'can-reflect@1.17.9#types/map',
-    'can-reflect@1.17.9#types/set',
-    'can-globals@1.2.1#global/global',
-    'can-globals@1.2.1#document/document',
-    'can-globals@1.2.1#location/location',
-    'can-globals@1.2.1#mutation-observer/mutation-observer',
-    'can-globals@1.2.1#is-browser-window/is-browser-window',
-    'can-globals@1.2.1#is-node/is-node',
-    'can-globals@1.2.1#custom-elements/custom-elements',
-    'can-debug@2.0.5#src/proxy-namespace',
-    'can-debug@2.0.5#src/temporarily-bind',
-    'can-debug@2.0.5#src/get-graph/get-graph',
-    'can-debug@2.0.5#src/graph/graph',
-    'can-assign@1.3.1#can-assign',
-    'can-debug@2.0.5#src/get-graph/make-node',
-    'can-reflect-dependencies@1.1.1#can-reflect-dependencies',
-    'can-reflect-dependencies@1.1.1#src/add-mutated-by',
-    'can-reflect-dependencies@1.1.1#src/delete-mutated-by',
-    'can-reflect-dependencies@1.1.1#src/get-dependency-data-of',
-    'can-reflect-dependencies@1.1.1#src/is-function',
-    'can-debug@2.0.5#src/format-graph/format-graph',
-    'can-debug@2.0.5#src/what-i-change/what-i-change',
-    'can-debug@2.0.5#src/log-data/log-data',
-    'can-debug@2.0.5#src/get-data/get-data',
-    'can-debug@2.0.5#src/label-cycles/label-cycles',
-    'can-debug@2.0.5#src/what-changes-me/what-changes-me',
-    'can-debug@2.0.5#src/get-what-i-change/get-what-i-change',
-    'can-debug@2.0.5#src/get-what-changes-me/get-what-changes-me',
-    'can-queues@1.2.1#can-queues',
-    'can-log@1.0.0#dev/dev',
-    'can-log@1.0.0#can-log',
-    'can-queues@1.2.1#queue',
-    'can-queues@1.2.1#queue-state',
-    'can-queues@1.2.1#priority-queue',
-    'can-queues@1.2.1#completion-queue',
-    'can-diff@1.4.4#merge-deep/merge-deep',
-    'can-diff@1.4.4#list/list',
-    'can-define@2.7.9#map/map',
-    'can-construct@3.5.4#can-construct',
-    'can-string@1.0.0#can-string',
-    'can-define@2.7.9#can-define',
-    'can-observation@4.1.2#can-observation',
-    'can-observation-recorder@1.3.0#can-observation-recorder',
-    'can-event-queue@1.1.4#value/value',
-    'can-key-tree@1.2.0#can-key-tree',
-    'can-define-lazy-value@1.1.0#define-lazy-value',
-    'can-event-queue@1.1.4#dependency-record/merge',
-    'can-observation@4.1.2#recorder-dependency-helpers',
-    'can-observation@4.1.2#temporarily-bind',
-    'can-simple-observable@2.4.1#async/async',
-    'can-simple-observable@2.4.1#can-simple-observable',
-    'can-simple-observable@2.4.1#log',
-    'can-simple-observable@2.4.1#settable/settable',
-    'can-simple-observable@2.4.1#resolver/resolver',
-    'can-event-queue@1.1.4#map/map',
-    'can-dom-events@1.3.3#can-dom-events',
-    'can-dom-events@1.3.3#helpers/util',
-    'can-dom-events@1.3.3#helpers/make-event-registry',
-    'can-dom-events@1.3.3#helpers/-make-delegate-event-tree',
-    'can-event-queue@1.1.4#type/type',
-    'can-string-to-any@1.2.0#can-string-to-any',
-    'can-data-types@1.2.0#maybe-boolean/maybe-boolean',
-    'can-data-types@1.2.0#maybe-date/maybe-date',
-    'can-data-types@1.2.0#maybe-number/maybe-number',
-    'can-data-types@1.2.0#maybe-string/maybe-string',
-    'can-define@2.7.9#define-helpers/define-helpers',
-    'can-define@2.7.9#ensure-meta',
-    'can-component@4.4.11#control/control',
-    'can-control@4.4.1#can-control',
-    'can-stache-key@1.4.0#can-stache-key',
-    'can-reflect-promise@2.2.0#can-reflect-promise',
-    'can-key@1.2.0#get/get',
-    'can-key@1.2.0#utils',
-    'can-dom-mutate@1.3.6#can-dom-mutate',
-    'can-dom-mutate@1.3.6#-util',
-    'can-bind@1.3.0#can-bind',
-    'can-stache@4.17.6#can-stache',
-    'can-view-parser@4.1.2#can-view-parser',
-    'can-attribute-encoder@1.1.2#can-attribute-encoder',
-    'can-view-callbacks@4.3.6#can-view-callbacks',
-    'can-dom-mutate@1.3.6#node',
-    'can-dom-mutate@1.3.6#node/node',
-    'can-view-nodelist@4.3.3#can-view-nodelist',
-    'can-fragment@1.3.0#can-fragment',
-    'can-child-nodes@1.2.0#can-child-nodes',
-    'can-stache@4.17.6#src/html_section',
-    'can-view-target@4.1.2#can-view-target',
-    'can-stache@4.17.6#src/utils',
-    'can-view-scope@4.13.0#can-view-scope',
-    'can-view-scope@4.13.0#template-context',
-    'can-simple-map@4.3.0#can-simple-map',
-    'can-view-scope@4.13.0#compute_data',
-    'can-view-scope@4.13.0#scope-key-data',
-    'can-view-scope@4.13.0#make-compute-like',
+    'can-globals@1.2.2#can-globals',
+    'can-globals@1.2.2#can-globals-instance',
+    'can-globals@1.2.2#can-globals-proto',
+    'can-reflect@1.17.11#can-reflect',
+    'can-reflect@1.17.11#reflections/call/call',
+    'can-symbol@1.6.5#can-symbol',
+    'can-reflect@1.17.11#reflections/type/type',
+    'can-reflect@1.17.11#reflections/helpers',
+    'can-reflect@1.17.11#reflections/get-set/get-set',
+    'can-reflect@1.17.11#reflections/observe/observe',
+    'can-reflect@1.17.11#reflections/shape/shape',
+    'can-reflect@1.17.11#reflections/shape/schema/schema',
+    'can-reflect@1.17.11#reflections/get-name/get-name',
+    'can-reflect@1.17.11#types/map',
+    'can-reflect@1.17.11#types/set',
+    'can-globals@1.2.2#global/global',
+    'can-globals@1.2.2#document/document',
+    'can-globals@1.2.2#location/location',
+    'can-globals@1.2.2#mutation-observer/mutation-observer',
+    'can-globals@1.2.2#is-browser-window/is-browser-window',
+    'can-globals@1.2.2#is-node/is-node',
+    'can-globals@1.2.2#custom-elements/custom-elements',
+    'can-debug@2.0.7#src/proxy-namespace',
+    'can-debug@2.0.7#src/temporarily-bind',
+    'can-debug@2.0.7#src/get-graph/get-graph',
+    'can-debug@2.0.7#src/graph/graph',
+    'can-assign@1.3.3#can-assign',
+    'can-debug@2.0.7#src/get-graph/make-node',
+    'can-reflect-dependencies@1.1.2#can-reflect-dependencies',
+    'can-reflect-dependencies@1.1.2#src/add-mutated-by',
+    'can-reflect-dependencies@1.1.2#src/delete-mutated-by',
+    'can-reflect-dependencies@1.1.2#src/get-dependency-data-of',
+    'can-reflect-dependencies@1.1.2#src/is-function',
+    'can-debug@2.0.7#src/format-graph/format-graph',
+    'can-debug@2.0.7#src/what-i-change/what-i-change',
+    'can-debug@2.0.7#src/log-data/log-data',
+    'can-debug@2.0.7#src/get-data/get-data',
+    'can-debug@2.0.7#src/label-cycles/label-cycles',
+    'can-debug@2.0.7#src/what-changes-me/what-changes-me',
+    'can-debug@2.0.7#src/get-what-i-change/get-what-i-change',
+    'can-debug@2.0.7#src/get-what-changes-me/get-what-changes-me',
+    'can-observation@4.1.3#can-observation',
+    'can-queues@1.2.2#can-queues',
+    'can-log@1.0.2#dev/dev',
+    'can-log@1.0.2#can-log',
+    'can-queues@1.2.2#queue',
+    'can-queues@1.2.2#queue-state',
+    'can-queues@1.2.2#priority-queue',
+    'can-queues@1.2.2#completion-queue',
+    'can-observation-recorder@1.3.1#can-observation-recorder',
+    'can-event-queue@1.1.6#value/value',
+    'can-key-tree@1.2.2#can-key-tree',
+    'can-define-lazy-value@1.1.1#define-lazy-value',
+    'can-event-queue@1.1.6#dependency-record/merge',
+    'can-observation@4.1.3#recorder-dependency-helpers',
+    'can-observation@4.1.3#temporarily-bind',
+    'can-diff@1.4.5#merge-deep/merge-deep',
+    'can-diff@1.4.5#list/list',
+    'can-define@2.7.18#map/map',
+    'can-construct@3.5.6#can-construct',
+    'can-string@1.0.1#can-string',
+    'can-define@2.7.18#can-define',
+    'can-simple-observable@2.4.2#async/async',
+    'can-simple-observable@2.4.2#can-simple-observable',
+    'can-simple-observable@2.4.2#log',
+    'can-simple-observable@2.4.2#settable/settable',
+    'can-simple-observable@2.4.2#resolver/resolver',
+    'can-event-queue@1.1.6#map/map',
+    'can-dom-events@1.3.11#can-dom-events',
+    'can-dom-events@1.3.11#helpers/util',
+    'can-dom-events@1.3.11#helpers/make-event-registry',
+    'can-dom-events@1.3.11#helpers/-make-delegate-event-tree',
+    'can-event-queue@1.1.6#type/type',
+    'can-string-to-any@1.2.1#can-string-to-any',
+    'can-data-types@1.2.1#maybe-boolean/maybe-boolean',
+    'can-data-types@1.2.1#maybe-date/maybe-date',
+    'can-data-types@1.2.1#maybe-number/maybe-number',
+    'can-data-types@1.2.1#maybe-string/maybe-string',
+    'can-define@2.7.18#define-helpers/define-helpers',
+    'can-define@2.7.18#ensure-meta',
+    'can-bind@1.4.3#can-bind',
+    'can-stache@4.17.19#can-stache',
+    'can-view-parser@4.1.3#can-view-parser',
+    'can-attribute-encoder@1.1.4#can-attribute-encoder',
+    'can-view-callbacks@4.4.0#can-view-callbacks',
+    'can-dom-mutate@1.3.9#can-dom-mutate',
+    'can-dom-mutate@1.3.9#-util',
+    'can-dom-mutate@1.3.9#node',
+    'can-dom-mutate@1.3.9#node/node',
+    'can-view-nodelist@4.3.4#can-view-nodelist',
+    'can-fragment@1.3.1#can-fragment',
+    'can-child-nodes@1.2.1#can-child-nodes',
+    'can-stache@4.17.19#src/html_section',
+    'can-view-target@4.1.6#can-view-target',
+    'can-stache@4.17.19#src/utils',
+    'can-view-scope@4.13.1#can-view-scope',
+    'can-stache-key@1.4.3#can-stache-key',
+    'can-reflect-promise@2.2.1#can-reflect-promise',
+    'can-view-scope@4.13.1#template-context',
+    'can-simple-map@4.3.2#can-simple-map',
+    'can-view-scope@4.13.1#compute_data',
+    'can-view-scope@4.13.1#scope-key-data',
+    'can-view-scope@4.13.1#make-compute-like',
     'can-single-reference@1.2.0#can-single-reference',
-    'can-cid@1.3.0#can-cid',
+    'can-cid@1.3.1#can-cid',
     'can-stache-helpers@1.2.0#can-stache-helpers',
-    'can-stache@4.17.6#src/key-observable',
-    'can-stache@4.17.6#src/text_section',
-    'can-view-live@4.2.7#can-view-live',
-    'can-view-live@4.2.7#lib/core',
-    'can-view-live@4.2.7#lib/attr',
-    'can-attribute-observable@1.2.1#behaviors',
-    'can-dom-data-state@1.0.5#can-dom-data-state',
-    'can-view-live@4.2.7#lib/attrs',
-    'can-view-live@4.2.7#lib/html',
-    'can-view-live@4.2.7#lib/list',
-    'can-view-live@4.2.7#lib/set-observable',
-    'can-diff@1.4.4#patcher/patcher',
-    'can-view-live@4.2.7#lib/text',
-    'can-stache@4.17.6#src/mustache_core',
-    'can-stache@4.17.6#src/expression',
-    'can-stache@4.17.6#expressions/arg',
-    'can-stache@4.17.6#expressions/literal',
-    'can-stache@4.17.6#expressions/hashes',
-    'can-stache@4.17.6#src/expression-helpers',
-    'can-simple-observable@2.4.1#setter/setter',
-    'can-stache@4.17.6#expressions/bracket',
-    'can-stache@4.17.6#expressions/call',
-    'can-stache@4.17.6#src/set-identifier',
-    'can-stache@4.17.6#expressions/helper',
-    'can-stache@4.17.6#expressions/lookup',
-    'can-stache@4.17.6#helpers/core',
-    'can-globals@1.2.1#base-url/base-url',
+    'can-stache@4.17.19#src/key-observable',
+    'can-stache@4.17.19#src/text_section',
+    'can-view-live@4.2.8#can-view-live',
+    'can-view-live@4.2.8#lib/core',
+    'can-view-live@4.2.8#lib/attr',
+    'can-attribute-observable@1.2.6#behaviors',
+    'can-dom-data@1.0.2#can-dom-data',
+    'can-view-live@4.2.8#lib/attrs',
+    'can-view-live@4.2.8#lib/html',
+    'can-view-live@4.2.8#lib/list',
+    'can-view-live@4.2.8#lib/set-observable',
+    'can-diff@1.4.5#patcher/patcher',
+    'can-view-live@4.2.8#lib/text',
+    'can-stache@4.17.19#src/mustache_core',
+    'can-stache@4.17.19#src/expression',
+    'can-stache@4.17.19#expressions/arg',
+    'can-stache@4.17.19#expressions/literal',
+    'can-stache@4.17.19#expressions/hashes',
+    'can-stache@4.17.19#src/expression-helpers',
+    'can-simple-observable@2.4.2#setter/setter',
+    'can-stache@4.17.19#expressions/bracket',
+    'can-stache@4.17.19#expressions/call',
+    'can-stache@4.17.19#src/set-identifier',
+    'can-stache@4.17.19#expressions/helper',
+    'can-stache@4.17.19#expressions/lookup',
+    'can-stache@4.17.19#helpers/core',
+    'can-globals@1.2.2#base-url/base-url',
     'can-join-uris@1.2.0#can-join-uris',
-    'can-parse-uri@1.2.0#can-parse-uri',
-    'can-stache@4.17.6#helpers/-debugger',
-    'can-stache@4.17.6#src/truthy-observable',
-    'can-stache@4.17.6#helpers/converter',
-    'can-dom-data@1.0.1#can-dom-data',
-    'can-stache@4.17.6#helpers/-for-of',
-    'can-stache@4.17.6#helpers/-let',
-    'can-stache@4.17.6#helpers/-portal',
+    'can-parse-uri@1.2.2#can-parse-uri',
+    'can-stache@4.17.19#helpers/-debugger',
+    'can-stache@4.17.19#src/truthy-observable',
+    'can-stache@4.17.19#helpers/converter',
+    'can-stache@4.17.19#helpers/-for-of',
+    'can-stache@4.17.19#helpers/-let',
+    'can-stache@4.17.19#helpers/-portal',
     'can-stache-ast@1.1.0#can-stache-ast',
     'can-stache-ast@1.1.0#controls',
     'can-import-module@1.2.0#can-import-module',
-    'can-stache-bindings@4.8.0#can-stache-bindings',
-    'can-view-model@4.0.1#can-view-model',
-    'can-attribute-observable@1.2.1#can-attribute-observable',
-    'can-attribute-observable@1.2.1#event',
-    'can-attribute-observable@1.2.1#get-event-name',
-    'can-event-dom-radiochange@2.2.0#can-event-dom-radiochange',
-    'can-define@2.7.9#list/list',
-    'xml-js@1.6.9#dist/xml-js',
-    'moment@2.23.0#moment',
-    'can-view-import@4.2.1#can-view-import'
+    'can-stache-bindings@4.10.8#can-stache-bindings',
+    'can-view-model@4.0.3#can-view-model',
+    'can-attribute-observable@1.2.6#can-attribute-observable',
+    'can-attribute-observable@1.2.6#event',
+    'can-attribute-observable@1.2.6#get-event-name',
+    'can-event-dom-radiochange@2.2.1#can-event-dom-radiochange',
+    'can-component@4.6.2#control/control',
+    'can-control@4.4.2#can-control',
+    'can-key@1.2.1#get/get',
+    'can-key@1.2.1#utils',
+    'can-define@2.7.18#list/list',
+    'xml-js@1.6.11#dist/xml-js',
+    'moment@2.24.0#moment',
+    'can-view-import@4.2.2#can-view-import'
 ], function (_lodash, _apiInfo, _timeEntries, _dashboardStacheStealStache, _canComponent) {
     'use strict';
     var _lodash2 = _interopRequireDefault(_lodash);
