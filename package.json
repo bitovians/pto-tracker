@@ -4,8 +4,8 @@
   "description": "Freshbooks-integrated PTO tracking for Bitovi employees",
   "main": "app.js",
   "scripts": {
-    "build": "steal-tools",
-    "bundle": "steal-tools bundle --dev",
+    "build": "steal-tools --no-minify",
+    "bundle": "steal-tools bundle --dev --no-minify",
     "develop": "other-index development.html 8080",
     "lint": "standard --fix 'components/**/*.js' 'models/**/*.js'",
     "postinstall": "npm run bundle",
