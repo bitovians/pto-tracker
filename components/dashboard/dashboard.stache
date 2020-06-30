@@ -1,5 +1,5 @@
 <div class="logout">
-  <a href="" on:click="clearAPIToken(scope.event)">Clear API Token</a>
+  <a href="" on:click="clearAPIToken(scope.event)">Clear Token</a>
 </div>
 <div class="display-wrapper">
   <div class="number-wrapper">

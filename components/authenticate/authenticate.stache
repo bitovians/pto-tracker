@@ -3,10 +3,10 @@
   <form>
     <label for="token" {{#unless(validToken)}}class="invalid-token"{{/if}}>
       {{#if(validToken)}}
-        Freshbooks API Token
+        Freshbooks Authentication Token
       {{else}}
         <i class="fas fa-exclamation-triangle"></i>
-        Double-check your API Token
+        Double-check your Authentication Token
       {{/if}}
     </label>
     <input type="text" id="token" value:bind="token" />
@@ -15,7 +15,8 @@
     </button>
     <small>
       <i class="far fa-question-circle"></i>
-      To find your API Token, log into Freshbooks, go to 'Profile'
+      To find your Authentication Token, log into
+      <a href="https://bitovi.freshbooks.com/">Freshbooks</a>, go to 'Profile'
       and scroll to the bottom of that page.
     </small>
   </form>
