@@ -88,7 +88,7 @@ Component.extend({
 
       anniversary += 1
       accruedByYear['' + lastYear] = 0
-      for (let m = 1, y = lastYear; m <= lastMonth; m++) {
+      for (let m = 0, y = lastYear; m <= lastMonth; m++) {
         accruedByYear['' + y] += this.hoursPerMonth(anniversary)
       }
       return accruedByYear
