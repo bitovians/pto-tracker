@@ -5,8 +5,7 @@ import moment from 'moment'
 import APIInfo from '~/models/api-info'
 
 export default DefineMap.extend('TimeEntries', {
-  init (apiInfo) {
-    this.apiInfo = apiInfo
+  init () {
     this.setFirstAndLastDays()
   },
 

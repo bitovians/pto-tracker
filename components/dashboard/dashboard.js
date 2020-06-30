@@ -1,17 +1,15 @@
 import _ from 'lodash'
+import moment from 'moment'
 import { Component } from 'can'
-
-import APIInfo from '~/models/api-info'
 import TimeEntries from '~/models/time-entries'
-
 import view from './dashboard.stache'
 
 Component.extend({
   tag: 'pto-dashboard',
   view,
   ViewModel: {
-    apiInfo: {
-      Type: APIInfo
+    timeEntries: {
+      Type: TimeEntries
     },
 
     get remainingDays () {
@@ -36,20 +34,8 @@ Component.extend({
       return this.totalAccruedHoursByYear(firstDay, lastDay)
     },
 
-    timeEntries: {
-      get (lastSet) {
-        if (lastSet) return lastSet
-        return new TimeEntries(this.apiInfo)
-      }
-    },
-
     get totalUsedByYear () {
       return this.totalUsedHoursByYear(this.timeEntries.allTimeOff)
-    },
-
-    clearAPIToken (ev) {
-      ev.preventDefault()
-      this.apiInfo.token = undefined
     },
 
     hoursPerMonth (anniversary) {
@@ -66,7 +52,7 @@ Component.extend({
       const firstMonth = parseInt(firstDay.split('-')[1])
       const firstYear = parseInt(firstDay.split('-')[0])
 
-      const today = new Date()
+      const today = moment(lastDay).toDate()
       const lastMonth = today.getMonth()
       const lastYear = today.getFullYear()
 

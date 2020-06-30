@@ -5,7 +5,10 @@
     {{#if(isPending)}}
       <pto-loading />
     {{else}}
-      <pto-dashboard apiInfo:from="apiInfo" />
+      <pto-dashboard
+        clearAPIToken:from="clearAPIToken"
+        timeEntries:from="timeEntries"
+      />
     {{/if}}
   </can-import>
 {{else}}
