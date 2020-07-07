@@ -20,4 +20,33 @@
       <h4>days available</h4>
     </div>
   </div>
+  {{#if(maxHoursGained)}}
+    <div class="table-wrapper">
+      <div class="table-body">
+        <div class="details-wrapper header">
+          <div class="month-year">Future Month</div>
+          <div class="hours-accrued">Accrue</div>
+          <div class="hours-remain">Remaining</div>
+        </div>
+        <div class="details-wrapper">
+          <div class="month-year">Jan 2019</div>
+          <div class="hours-accrued">{{maxHoursGained}}</div>
+          <div class="hours-remain">36.34</div>
+        </div>
+        <div class="details-wrapper">
+          <div class="month-year">Feb 2019</div>
+          <div class="hours-accrued">{{maxHoursGained}}</div>
+          <div class="hours-remain">53.67</div>
+        </div>
+        <div class="details-wrapper">
+          <div class="month-year">Mar 2019</div>
+          <div class="hours-accrued">{{maxHoursGained}}</div>
+          <div class="hours-remain">71</div>
+        </div>
+      </div>
+      <div class="table-footer">
+        You will stop accruing PTO in Mar 2019 unless some is spent.
+      </div>
+    {{/if}}
+  </div>
 </div>

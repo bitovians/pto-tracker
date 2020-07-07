@@ -12,6 +12,10 @@ Component.extend({
       Type: TimeEntries
     },
 
+    maxHoursGained: {
+      type: 'number'
+    },
+
     get remainingDays () {
       const hours = this.remainingHours
       return (hours < 8) ? 0 : (hours / 8).toFixed(1)
@@ -31,7 +35,16 @@ Component.extend({
     get totalAccruedByYear () {
       const firstDay = this.timeEntries.firstDay
       const lastDay = this.timeEntries.lastDay
-      return this.totalAccruedHoursByYear(firstDay, lastDay)
+
+      const total = this.totalAccruedHoursByYear(firstDay, lastDay)
+      if (total) {
+        const today = moment(lastDay).toDate()
+        const lastMonth = today.getMonth()
+        const lastYear = today.getFullYear()
+        this.maxHoursGained = total[lastYear] / (lastMonth + 1)
+      }
+
+      return total
     },
 
     get totalUsedByYear () {
