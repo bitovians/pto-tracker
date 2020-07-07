@@ -54,7 +54,9 @@ export default DefineMap.extend('TimeEntries', {
   },
 
   howManyPages (entries) {
-    return parseInt(entries.response.time_entries._attributes.pages)
+    return (entries.response.time_entries)
+      ? parseInt(entries.response.time_entries._attributes.pages)
+      : 0
   },
 
   requestBodyFor (page = 1, filterByTask = false) {
@@ -94,7 +96,10 @@ export default DefineMap.extend('TimeEntries', {
 
   setFirstAndLastDays () {
     return this.requestEntries().then(entries => {
-      return this.requestEntries(this.howManyPages(entries)).then(earliest => {
+      const pages = this.howManyPages(entries)
+      if (pages < 1) return
+
+      return this.requestEntries(pages).then(earliest => {
         this.lastDay =
           this.selectEntryAt(entries, 0).date._text
 

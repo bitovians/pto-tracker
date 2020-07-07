@@ -351,7 +351,7 @@ define('bitovians-pto@1.0.0#components/authenticate/authenticate.stache!steal-st
         {
             'tokenType': 'attrStart',
             'args': [
-                'value:bind',
+                'value:to',
                 12
             ]
         },
@@ -365,7 +365,7 @@ define('bitovians-pto@1.0.0#components/authenticate/authenticate.stache!steal-st
         {
             'tokenType': 'attrEnd',
             'args': [
-                'value:bind',
+                'value:to',
                 12
             ]
         },

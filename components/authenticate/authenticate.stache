@@ -9,7 +9,7 @@
         Double-check your Authentication Token
       {{/if}}
     </label>
-    <input type="text" id="token" value:bind="token" />
+    <input type="text" id="token" value:to="token" />
     <button on:click="authenticate(scope.event)">
       Authenticate
     </button>
