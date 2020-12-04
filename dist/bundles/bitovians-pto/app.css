@@ -103,12 +103,18 @@ pto-dashboard .number-wrapper .hours-container {
 pto-dashboard .hours-container {
   margin: 0 1vw 0 auto;
 }
+pto-dashboard .hours-container pto-loading {
+  margin: 0 0 5vh;
+}
 pto-dashboard .days-container {
   background: #FFFFFF;
   color: #CCCCCC;
   border: 1vw solid #CCCCCC;
   margin: 0 auto 0 1vw;
   padding: 15px 30px 30px;
+}
+pto-dashboard .days-container pto-loading {
+  margin: 0 0 5vh;
 }
 pto-dashboard .useby-wrapper {
   display: flex;

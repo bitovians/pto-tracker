@@ -1,8 +1,8 @@
-/*lodash@4.17.15#lodash*/
+/*lodash@4.17.20#lodash*/
 ;
 (function () {
     var undefined;
-    var VERSION = '4.17.15';
+    var VERSION = '4.17.20';
     var LARGE_ARRAY_SIZE = 200;
     var CORE_ERROR_TEXT = 'Unsupported core-js use. Try https://npms.io/search?q=ponyfill.', FUNC_ERROR_TEXT = 'Expected a function';
     var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -1639,8 +1639,20 @@
             return isIndex(n, length) ? array[n] : undefined;
         }
         function baseOrderBy(collection, iteratees, orders) {
+            if (iteratees.length) {
+                iteratees = arrayMap(iteratees, function (iteratee) {
+                    if (isArray(iteratee)) {
+                        return function (value) {
+                            return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
+                        };
+                    }
+                    return iteratee;
+                });
+            } else {
+                iteratees = [identity];
+            }
             var index = -1;
-            iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
+            iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
             var result = baseMap(collection, function (value, key, collection) {
                 var criteria = arrayMap(iteratees, function (iteratee) {
                     return iteratee(value);
@@ -1754,6 +1766,9 @@
             var index = -1, length = path.length, lastIndex = length - 1, nested = object;
             while (nested != null && ++index < length) {
                 var key = toKey(path[index]), newValue = value;
+                if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+                    return object;
+                }
                 if (index != lastIndex) {
                     var objValue = nested[key];
                     newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -1822,8 +1837,12 @@
             return baseSortedIndexBy(array, value, identity, retHighest);
         }
         function baseSortedIndexBy(array, value, iteratee, retHighest) {
+            var low = 0, high = array == null ? 0 : array.length;
+            if (high === 0) {
+                return 0;
+            }
             value = iteratee(value);
-            var low = 0, high = array == null ? 0 : array.length, valIsNaN = value !== value, valIsNull = value === null, valIsSymbol = isSymbol(value), valIsUndefined = value === undefined;
+            var valIsNaN = value !== value, valIsNull = value === null, valIsSymbol = isSymbol(value), valIsUndefined = value === undefined;
             while (low < high) {
                 var mid = nativeFloor((low + high) / 2), computed = iteratee(array[mid]), othIsDefined = computed !== undefined, othIsNull = computed === null, othIsReflexive = computed === computed, othIsSymbol = isSymbol(computed);
                 if (valIsNaN) {
@@ -2536,9 +2555,10 @@
             if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
                 return false;
             }
-            var stacked = stack.get(array);
-            if (stacked && stack.get(other)) {
-                return stacked == other;
+            var arrStacked = stack.get(array);
+            var othStacked = stack.get(other);
+            if (arrStacked && othStacked) {
+                return arrStacked == other && othStacked == array;
             }
             var index = -1, result = true, seen = bitmask & COMPARE_UNORDERED_FLAG ? new SetCache() : undefined;
             stack.set(array, other);
@@ -2631,9 +2651,10 @@
                     return false;
                 }
             }
-            var stacked = stack.get(object);
-            if (stacked && stack.get(other)) {
-                return stacked == other;
+            var objStacked = stack.get(object);
+            var othStacked = stack.get(other);
+            if (objStacked && othStacked) {
+                return objStacked == other && othStacked == object;
             }
             var result = true;
             stack.set(object, other);
@@ -4630,7 +4651,7 @@
             var imports = assignInWith({}, options.imports, settings.imports, customDefaultsAssignIn), importsKeys = keys(imports), importsValues = baseValues(imports, importsKeys);
             var isEscaping, isEvaluating, index = 0, interpolate = options.interpolate || reNoMatch, source = '__p += \'';
             var reDelimiters = RegExp((options.escape || reNoMatch).source + '|' + interpolate.source + '|' + (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + '|' + (options.evaluate || reNoMatch).source + '|$', 'g');
-            var sourceURL = '//# sourceURL=' + (hasOwnProperty.call(options, 'sourceURL') ? (options.sourceURL + '').replace(/[\r\n]/g, ' ') : 'lodash.templateSources[' + ++templateCounter + ']') + '\n';
+            var sourceURL = '//# sourceURL=' + (hasOwnProperty.call(options, 'sourceURL') ? (options.sourceURL + '').replace(/\s/g, ' ') : 'lodash.templateSources[' + ++templateCounter + ']') + '\n';
             string.replace(reDelimiters, function (match, escapeValue, interpolateValue, esTemplateValue, evaluateValue, offset) {
                 interpolateValue || (interpolateValue = esTemplateValue);
                 source += string.slice(index, offset).replace(reUnescapedString, escapeStringChar);
@@ -5484,7 +5505,7 @@
     var _ = runInContext();
     if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
         root._ = _;
-        define('lodash@4.17.15#lodash', function () {
+        define('lodash@4.17.20#lodash', function () {
             return _;
         });
     } else if (freeModule) {
@@ -5501,36 +5522,81 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
     'can-stache',
     'can-stache/src/mustache_core',
     'can-view-import@4.2.2#can-view-import',
-    'can-stache-bindings@4.10.9#can-stache-bindings'
+    'can-stache-bindings@4.10.9#can-stache-bindings',
+    '~/components/loading/'
 ], function (module, assign, stache, mustacheCore) {
     var renderer = stache('components/dashboard/dashboard.stache', [
         {
             'tokenType': 'start',
             'args': [
-                'div',
-                false,
+                'can-import',
+                true,
                 1
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
-                'class',
+                'from',
                 1
+            ]
+        },
+        {
+            'tokenType': 'attrValue',
+            'args': [
+                '~/components/loading/',
+                1
+            ]
+        },
+        {
+            'tokenType': 'attrEnd',
+            'args': [
+                'from',
+                1
+            ]
+        },
+        {
+            'tokenType': 'end',
+            'args': [
+                'can-import',
+                true,
+                1
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                '\n\n',
+                1
+            ]
+        },
+        {
+            'tokenType': 'start',
+            'args': [
+                'div',
+                false,
+                3
+            ]
+        },
+        {
+            'tokenType': 'attrStart',
+            'args': [
+                'class',
+                3
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'logout',
-                1
+                3
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                1
+                3
             ]
         },
         {
@@ -5538,14 +5604,14 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                1
+                3
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n  ',
-                1
+                3
             ]
         },
         {
@@ -5553,42 +5619,42 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'a',
                 false,
-                2
+                4
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'href',
-                2
+                4
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'href',
-                2
+                4
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'on:click',
-                2
+                4
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'clearAPIToken(scope.event)',
-                2
+                4
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'on:click',
-                2
+                4
             ]
         },
         {
@@ -5596,42 +5662,42 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'a',
                 false,
-                2
+                4
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 'Clear Token',
-                2
+                4
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'a',
-                2
+                4
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n',
-                2
+                4
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                3
+                5
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n',
-                3
+                5
             ]
         },
         {
@@ -5639,28 +5705,28 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                4
+                6
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'class',
-                4
+                6
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'display-wrapper',
-                4
+                6
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                4
+                6
             ]
         },
         {
@@ -5668,14 +5734,14 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                4
+                6
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n  ',
-                4
+                6
             ]
         },
         {
@@ -5683,28 +5749,28 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                5
+                7
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'class',
-                5
+                7
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'number-wrapper',
-                5
+                7
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                5
+                7
             ]
         },
         {
@@ -5712,14 +5778,14 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                5
+                7
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                5
+                7
             ]
         },
         {
@@ -5727,28 +5793,28 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                6
+                8
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'class',
-                6
+                8
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'hours-container',
-                6
+                8
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                6
+                8
             ]
         },
         {
@@ -5756,28 +5822,28 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                6
+                8
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 ' ',
-                6
+                8
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '#if(remainingHours)',
-                6
+                8
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
-                '\n        ',
-                6
+                '\n      ',
+                8
             ]
         },
         {
@@ -5785,7 +5851,7 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h1',
                 false,
-                7
+                9
             ]
         },
         {
@@ -5793,93 +5859,79 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h1',
                 false,
-                7
+                9
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'remainingHours',
-                7
+                9
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h1',
-                7
+                9
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                7
+                9
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'else',
-                8
-            ]
-        },
-        {
-            'tokenType': 'chars',
-            'args': [
-                '\n        ',
-                8
-            ]
-        },
-        {
-            'tokenType': 'start',
-            'args': [
-                'h1',
-                false,
-                9
-            ]
-        },
-        {
-            'tokenType': 'end',
-            'args': [
-                'h1',
-                false,
-                9
-            ]
-        },
-        {
-            'tokenType': 'chars',
-            'args': [
-                '--',
-                9
-            ]
-        },
-        {
-            'tokenType': 'close',
-            'args': [
-                'h1',
-                9
+                10
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                9
+                10
+            ]
+        },
+        {
+            'tokenType': 'start',
+            'args': [
+                'pto-loading',
+                true,
+                11
+            ]
+        },
+        {
+            'tokenType': 'end',
+            'args': [
+                'pto-loading',
+                true,
+                11
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                '\n      ',
+                11
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '/if',
-                10
+                12
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                10
+                12
             ]
         },
         {
@@ -5887,7 +5939,7 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h4',
                 false,
-                11
+                13
             ]
         },
         {
@@ -5895,42 +5947,42 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h4',
                 false,
-                11
+                13
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 'hours available',
-                11
+                13
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h4',
-                11
+                13
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                11
+                13
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                12
+                14
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                12
+                14
             ]
         },
         {
@@ -5938,28 +5990,28 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                13
+                15
             ]
         },
         {
             'tokenType': 'attrStart',
             'args': [
                 'class',
-                13
+                15
             ]
         },
         {
             'tokenType': 'attrValue',
             'args': [
                 'days-container',
-                13
+                15
             ]
         },
         {
             'tokenType': 'attrEnd',
             'args': [
                 'class',
-                13
+                15
             ]
         },
         {
@@ -5967,28 +6019,28 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'div',
                 false,
-                13
+                15
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                13
+                15
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '#if(remainingHours)',
-                14
+                16
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
-                '\n        ',
-                14
+                '\n      ',
+                16
             ]
         },
         {
@@ -5996,7 +6048,7 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h1',
                 false,
-                15
+                17
             ]
         },
         {
@@ -6004,93 +6056,79 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h1',
                 false,
-                15
+                17
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'remainingDays',
-                15
+                17
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h1',
-                15
+                17
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                15
+                17
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 'else',
-                16
-            ]
-        },
-        {
-            'tokenType': 'chars',
-            'args': [
-                '\n        ',
-                16
-            ]
-        },
-        {
-            'tokenType': 'start',
-            'args': [
-                'h1',
-                false,
-                17
-            ]
-        },
-        {
-            'tokenType': 'end',
-            'args': [
-                'h1',
-                false,
-                17
-            ]
-        },
-        {
-            'tokenType': 'chars',
-            'args': [
-                '--',
-                17
-            ]
-        },
-        {
-            'tokenType': 'close',
-            'args': [
-                'h1',
-                17
+                18
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n      ',
-                17
+                18
+            ]
+        },
+        {
+            'tokenType': 'start',
+            'args': [
+                'pto-loading',
+                true,
+                19
+            ]
+        },
+        {
+            'tokenType': 'end',
+            'args': [
+                'pto-loading',
+                true,
+                19
+            ]
+        },
+        {
+            'tokenType': 'chars',
+            'args': [
+                '\n      ',
+                19
             ]
         },
         {
             'tokenType': 'special',
             'args': [
                 '/if',
-                18
+                20
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n\n      ',
-                18
+                20
             ]
         },
         {
@@ -6098,7 +6136,7 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h4',
                 false,
-                20
+                22
             ]
         },
         {
@@ -6106,75 +6144,68 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
             'args': [
                 'h4',
                 false,
-                20
+                22
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 'days available',
-                20
+                22
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'h4',
-                20
+                22
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n    ',
-                20
+                22
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                21
+                23
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n  ',
-                21
+                23
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                22
+                24
             ]
         },
         {
             'tokenType': 'chars',
             'args': [
                 '\n',
-                22
+                24
             ]
         },
         {
             'tokenType': 'close',
             'args': [
                 'div',
-                23
-            ]
-        },
-        {
-            'tokenType': 'chars',
-            'args': [
-                '\n',
-                23
+                25
             ]
         },
         {
             'tokenType': 'done',
-            'args': [24]
+            'args': [25]
         }
     ]);
     return function (scope, options, nodeList) {
@@ -6189,7 +6220,7 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4
 });
 /*bitovians-pto@1.0.0#components/dashboard/dashboard*/
 define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
-    'lodash@4.17.15#lodash',
+    'lodash@4.17.20#lodash',
     'moment@2.27.0#moment',
     'bitovians-pto@1.0.0#models/time-entries',
     'bitovians-pto@1.0.0#components/dashboard/dashboard.stache!steal-stache@4.1.5#steal-stache',
@@ -6358,7 +6389,9 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
     'can-define@2.8.0#list/list',
     'xml-js@1.6.11#dist/xml-js',
     'bitovians-pto@1.0.0#models/api-info',
-    'can-view-import@4.2.2#can-view-import'
+    'can-view-import@4.2.2#can-view-import',
+    'bitovians-pto@1.0.0#components/loading/loading',
+    'bitovians-pto@1.0.0#components/loading/loading.stache!steal-stache@4.1.5#steal-stache'
 ], function (_lodash, _moment, _timeEntries, _dashboardStacheStealStache, _canComponent) {
     'use strict';
     var _lodash2 = _interopRequireDefault(_lodash);
