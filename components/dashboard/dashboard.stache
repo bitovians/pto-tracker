@@ -1,3 +1,5 @@
+<can-import from="~/components/loading/" />
+
 <div class="logout">
   <a href="" on:click="clearAPIToken(scope.event)">Clear Token</a>
 </div>
@@ -5,17 +7,17 @@
   <div class="number-wrapper">
     <div class="hours-container">
       {{#if(remainingHours)}}
-        <h1>{{remainingHours}}</h1>
+      <h1>{{remainingHours}}</h1>
       {{else}}
-        <h1>--</h1>
+      <pto-loading />
       {{/if}}
       <h4>hours available</h4>
     </div>
     <div class="days-container">
       {{#if(remainingHours)}}
-        <h1>{{remainingDays}}</h1>
+      <h1>{{remainingDays}}</h1>
       {{else}}
-        <h1>--</h1>
+      <pto-loading />
       {{/if}}
       <h4>days available</h4>
     </div>
