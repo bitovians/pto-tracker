@@ -6415,12 +6415,13 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
                 var accrued = this.totalAccruedByYear;
                 var used = this.totalUsedByYear;
                 if (accrued && used) {
-                    var result = Object.values(_lodash2.default.mergeWith(accrued, used, function (a, u) {
+                    var netHours = Object.values(_lodash2.default.mergeWith(accrued, used, function (a, u) {
                         return a - u;
-                    })).reduce(function (acc, v) {
+                    }));
+                    var total = netHours.reduce(function (acc, v) {
                         return acc + v;
-                    });
-                    return result.toFixed(1);
+                    }, 0);
+                    return total.toFixed(1);
                 }
                 return 0;
             },
@@ -6458,17 +6459,19 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
                 for (var m = firstMonth, y = firstYear; m <= 12; m++) {
                     accruedByYear['' + y] += this.hoursPerMonth(anniversary);
                 }
-                for (var _y = firstYear + 1; _y <= lastYear - 1; _y++) {
-                    anniversary += 1;
-                    accruedByYear['' + _y] = 0;
-                    for (var _m = 1; _m <= 12; _m++) {
-                        accruedByYear['' + _y] += this.hoursPerMonth(anniversary);
+                if (firstYear < lastYear) {
+                    for (var _y = firstYear + 1; _y <= lastYear - 1; _y++) {
+                        anniversary += 1;
+                        accruedByYear['' + _y] = 0;
+                        for (var _m = 1; _m <= 12; _m++) {
+                            accruedByYear['' + _y] += this.hoursPerMonth(anniversary);
+                        }
                     }
-                }
-                anniversary += 1;
-                accruedByYear['' + lastYear] = 0;
-                for (var _m2 = 0, _y2 = lastYear; _m2 <= lastMonth; _m2++) {
-                    accruedByYear['' + _y2] += this.hoursPerMonth(anniversary);
+                    anniversary += 1;
+                    accruedByYear['' + lastYear] = 0;
+                    for (var _m2 = 0, _y2 = lastYear; _m2 <= lastMonth; _m2++) {
+                        accruedByYear['' + _y2] += this.hoursPerMonth(anniversary);
+                    }
                 }
                 return accruedByYear;
             },

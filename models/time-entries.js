@@ -42,6 +42,8 @@ export default DefineMap.extend('TimeEntries', {
   lastDay: 'string',
 
   collectTimeEntries (collection, data) {
+    if (!data) return collection
+
     const today = moment()
     const entries = [].concat(data)
     entries.forEach(e => {

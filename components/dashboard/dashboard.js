@@ -21,9 +21,9 @@ Component.extend({
       const accrued = this.totalAccruedByYear
       const used = this.totalUsedByYear
       if (accrued && used) {
-        const result = Object.values(_.mergeWith(accrued, used, (a, u) => a - u))
-          .reduce((acc, v) => acc + v)
-        return result.toFixed(1)
+        const netHours = Object.values(_.mergeWith(accrued, used, (a, u) => a - u))
+        const total = netHours.reduce((acc, v) => acc + v, 0.0)
+        return total.toFixed(1)
       }
       return 0.0
     },
@@ -64,19 +64,22 @@ Component.extend({
         accruedByYear['' + y] += this.hoursPerMonth(anniversary)
       }
 
-      for (let y = firstYear + 1; y <= lastYear - 1; y++) {
+      if (firstYear < lastYear) {
+        for (let y = firstYear + 1; y <= lastYear - 1; y++) {
+          anniversary += 1
+          accruedByYear['' + y] = 0
+          for (let m = 1; m <= 12; m++) {
+            accruedByYear['' + y] += this.hoursPerMonth(anniversary)
+          }
+        }
+
         anniversary += 1
-        accruedByYear['' + y] = 0
-        for (let m = 1; m <= 12; m++) {
+        accruedByYear['' + lastYear] = 0
+        for (let m = 0, y = lastYear; m <= lastMonth; m++) {
           accruedByYear['' + y] += this.hoursPerMonth(anniversary)
         }
       }
 
-      anniversary += 1
-      accruedByYear['' + lastYear] = 0
-      for (let m = 0, y = lastYear; m <= lastMonth; m++) {
-        accruedByYear['' + y] += this.hoursPerMonth(anniversary)
-      }
       return accruedByYear
     },
 
