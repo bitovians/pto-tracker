@@ -6388,6 +6388,7 @@ define('bitovians-pto@1.0.0#components/dashboard/dashboard', [
     'can-key@1.2.1#utils',
     'can-define@2.8.0#list/list',
     'xml-js@1.6.11#dist/xml-js',
+    'bitovians-pto@1.0.0#package.json',
     'bitovians-pto@1.0.0#models/api-info',
     'can-view-import@4.2.2#can-view-import',
     'bitovians-pto@1.0.0#components/loading/loading',

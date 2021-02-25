@@ -2,15 +2,16 @@ import { DefineMap } from 'can'
 import convert from 'xml-js'
 import moment from 'moment'
 
+import app from '~/package.json'
 import APIInfo from '~/models/api-info'
 
 export default DefineMap.extend('TimeEntries', {
-  init () {
+  init() {
     this.setFirstAndLastDays()
   },
 
   allTimeOff: {
-    get (lastSet, resolve) {
+    get(lastSet, resolve) {
       if (lastSet) return lastSet
 
       const promised = []
@@ -41,7 +42,7 @@ export default DefineMap.extend('TimeEntries', {
 
   lastDay: 'string',
 
-  collectTimeEntries (collection, data) {
+  collectTimeEntries(collection, data) {
     if (!data) return collection
 
     const today = moment()
@@ -55,13 +56,13 @@ export default DefineMap.extend('TimeEntries', {
     return collection
   },
 
-  howManyPages (entries) {
+  howManyPages(entries) {
     return (entries.response.time_entries)
       ? parseInt(entries.response.time_entries._attributes.pages)
       : 0
   },
 
-  requestBodyFor (page = 1, filterByTask = false) {
+  requestBodyFor(page = 1, filterByTask = false) {
     return `
       <?xml version="1.0" encoding="utf-8"?>
       <request method="time_entry.list">
@@ -72,14 +73,14 @@ export default DefineMap.extend('TimeEntries', {
     `
   },
 
-  requestEntries (page = 1, filter = false) {
+  requestEntries(page = 1, filter = false) {
     const headers = new window.Headers()
     headers.append('Authorization', `Basic ${window.btoa(this.apiInfo.token + ':' + 'X')}`)
     headers.append('Content-Type', 'application/xml')
     headers.append('X-Requested-With', 'XMLHttpRequest')
     const body = this.requestBodyFor(page, filter)
 
-    const url = `https://cors-anywhere.herokuapp.com/${this.apiInfo.url}`
+    const url = `${app.proxy}${this.apiInfo.url}`
     return window.fetch(url, {
       method: 'POST',
       headers,
@@ -92,11 +93,11 @@ export default DefineMap.extend('TimeEntries', {
     })
   },
 
-  selectEntryAt (entries, where) {
+  selectEntryAt(entries, where) {
     return entries.response.time_entries.time_entry[where]
   },
 
-  setFirstAndLastDays () {
+  setFirstAndLastDays() {
     return this.requestEntries().then(entries => {
       const pages = this.howManyPages(entries)
       if (pages < 1) return
