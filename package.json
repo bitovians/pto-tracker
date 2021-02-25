@@ -41,5 +41,5 @@
       "steal-less"
     ]
   },
-  "proxy": "https://cors-anywhere.herokuapp.com/"
+  "proxy": "https://bitovi-cors.herokuapp.com/"
 }
