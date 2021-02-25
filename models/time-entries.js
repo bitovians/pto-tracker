@@ -77,7 +77,6 @@ export default DefineMap.extend('TimeEntries', {
     const headers = new window.Headers()
     headers.append('Authorization', `Basic ${window.btoa(this.apiInfo.token + ':' + 'X')}`)
     headers.append('Content-Type', 'application/xml')
-    headers.append('X-Requested-With', 'XMLHttpRequest')
     const body = this.requestBodyFor(page, filter)
 
     const url = `${app.proxy}${this.apiInfo.url}`
